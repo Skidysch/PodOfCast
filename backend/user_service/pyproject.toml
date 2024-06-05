@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "user_service"
+version = "0.1.0"
+description = ""
+authors = ["Pavel Bocharov <skidyschggwp@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+Django = "^5.0.6"
+djangorestframework = "^3.15.1"
+djangorestframework-simplejwt = "^5.3.1"
+djoser = "^2.2.2"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
