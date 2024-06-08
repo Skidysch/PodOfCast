@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Montserrat_Alternates } from "next/font/google";
-import "./globals.css";
+import "./styles/globals.css";
 import { cn } from "@/lib/utils";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const montserratAlternates = Montserrat_Alternates({
   subsets: ["latin"],
@@ -23,11 +25,13 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen max-w-content mx-auto font-sans antialiased",
           montserratAlternates.variable
         )}
       >
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

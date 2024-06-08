@@ -22,8 +22,8 @@
     --muted: 204 38% 95%;
     --muted-foreground: 0 0% 0%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 203 39% 65%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 0% 30%;
     --destructive-foreground: 0 0% 100%;
@@ -71,6 +71,17 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground flex flex-col items-center;
   }
+  main {
+    @apply min-h-full flex-grow;
+  }
+}
+
+.button {
+  @apply font-bold text-sm text-white py-3 px-6 bg-black rounded-lg hover:text-black transition-all duration-300 ease-in-out;
+}
+
+.button--light {
+  @apply font-bold text-sm text-black py-3 px-6 bg-white border-black border-2 rounded-lg hover:bg-secondary hover:text-white hover:border-secondary transition-all duration-300 ease-in-out;
 }
