@@ -18,7 +18,7 @@ const config = {
         "2xl": "1192px",
       },
     },
-    
+
     extend: {
       fontFamily: {
         sans: ["var(--font-main)", ...fontFamily.sans],
@@ -78,11 +78,26 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       maxWidth: {
-        "content": "1440px",
+        content: "1440px",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function ({ addUtilities }) {
+      const newUtilities = {
+        "::selection": {
+          "background-color": "#81adc8",
+          color: "#fff",
+        },
+        ".dark ::selection": {
+          "background-color": "#cd4631",
+          color: "#000",
+        },
+      };
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
+  ],
 } satisfies Config;
 
 export default config;
