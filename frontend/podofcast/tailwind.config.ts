@@ -13,11 +13,12 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1rem",
       screens: {
-        "2xl": "1440px",
+        "2xl": "1192px",
       },
     },
+    
     extend: {
       fontFamily: {
         sans: ["var(--font-main)", ...fontFamily.sans],
@@ -75,6 +76,9 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      maxWidth: {
+        "content": "1440px",
       },
     },
   },
