@@ -1,0 +1,27 @@
+.form {
+  @apply w-full flex flex-col items-center;
+}
+
+.form-item {
+  @apply space-y-3 w-full;
+}
+
+.form-label {
+  @apply text-sm font-bold;
+}
+
+.form-input {
+  @apply p-5 w-full text-black font-bold rounded-lg border-[1.5px] border-black bg-white outline-none mt-4 transition-colors duration-300 ease-in-out;
+}
+
+.form-input::placeholder {
+  @apply text-destructive font-medium;
+}
+
+.form-input:focus-visible {
+  @apply border-primary;
+}
+
+.form-error {
+  @apply mt-4 text-primary;
+}
