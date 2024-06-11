@@ -8,23 +8,15 @@ import {
   StyledTiktokIcon,
   StyledTwitterIcon,
 } from "@/components/StyledSVG";
-import GooglePodcastBanner from "/public/google-podcast-banner.png";
-import SpotifyBanner from "/public/spotify-banner.png";
-import YoutubeBanner from "/public/youtube-banner.png";
-import AppleStoreIcon from "/public/apple-store-icon.png";
-import GooglePlayIcon from "/public/google-play-icon.png";
-import { SocialListProps } from "@/types/types";
+
+import { SocialListProps } from "@/types";
+import {
+  FooterLinks,
+  PlatformFooterList,
+  PlayMarketFooterList,
+} from "@/constants";
 
 const Footer = () => {
-  const FooterLinks = [
-    "About",
-    "Episodes",
-    "Testimonials",
-    "Pricing",
-    "Features",
-    "Blog",
-  ];
-
   const SocialList: SocialListProps[] = [
     {
       link: "https://twitter.com",
@@ -65,12 +57,12 @@ const Footer = () => {
           </div>
         </div>
         <div className="grid gap-y-5 gap-x-24 font-medium grid-cols-2 h-fit">
-          {FooterLinks.map((link) => (
+          {FooterLinks.map((item) => (
             <Link
               className="self-start hover:text-primary transition-colors duration-300 ease-in-out"
-              href="#"
+              href={item.link}
             >
-              {link}
+              {item.name}
             </Link>
           ))}
         </div>
@@ -80,66 +72,37 @@ const Footer = () => {
               Listen episodes on your fav platform:
             </p>
             <div className="flex gap-10">
-              <Link
-                href="#"
-                className="hover:scale-90 transition-transform duration-300 ease-in-out"
-              >
-                <Image
-                  width={120}
-                  height={22}
-                  src={GooglePodcastBanner}
-                  alt="Google Podcasts"
-                />
-              </Link>
-              <Link
-                href="#"
-                className="hover:scale-90 transition-transform duration-300 ease-in-out"
-              >
-                <Image
-                  width={80}
-                  height={22}
-                  src={SpotifyBanner}
-                  alt="Spotify"
-                />
-              </Link>
-              <Link
-                href="#"
-                className="hover:scale-90 transition-transform duration-300 ease-in-out"
-              >
-                <Image
-                  width={90}
-                  height={22}
-                  src={YoutubeBanner}
-                  alt="Youtube"
-                />
-              </Link>
+              {PlatformFooterList.map((item) => (
+                <Link
+                  href={item.link}
+                  className="hover:scale-90 transition-transform duration-300 ease-in-out flex justify-center items-center"
+                >
+                  <Image
+                    width={90}
+                    height={22}
+                    src={item.src}
+                    alt={item.name}
+                  />
+                </Link>
+              ))}
             </div>
           </div>
           <div className="flex flex-col gap-5">
             <p className="font-medium text-destructive">App available on:</p>
             <div className="flex gap-5">
-              <Link
-                href="#"
-                className="hover:scale-90 transition-transform duration-300 ease-in-out"
-              >
-                <Image
-                  src={AppleStoreIcon}
-                  width={36}
-                  height={36}
-                  alt="Apple Store"
-                />
-              </Link>
-              <Link
-                href="#"
-                className="hover:scale-90 transition-transform duration-300 ease-in-out"
-              >
-                <Image
-                  src={GooglePlayIcon}
-                  width={36}
-                  height={36}
-                  alt="Google Play"
-                />
-              </Link>
+              {PlayMarketFooterList.map((item) => (
+                <Link
+                  href={item.link}
+                  className="hover:scale-90 transition-transform duration-300 ease-in-out"
+                >
+                  <Image
+                    src={item.src}
+                    width={36}
+                    height={36}
+                    alt={item.name}
+                  />
+                </Link>
+              ))}
             </div>
           </div>
         </div>
@@ -151,11 +114,17 @@ const Footer = () => {
             <span className="text-primary">Pod of Cast</span>
           </p>
           <div className="flex gap-[10px]">
-            <Link className="hover:text-primary transition-colors duration-300 ease-in-out" href="#">
+            <Link
+              className="hover:text-primary transition-colors duration-300 ease-in-out"
+              href="#"
+            >
               Terms
             </Link>
             •
-            <Link className="hover:text-primary transition-colors duration-300 ease-in-out" href="#">
+            <Link
+              className="hover:text-primary transition-colors duration-300 ease-in-out"
+              href="#"
+            >
               Privacy
             </Link>
           </div>
