@@ -88,11 +88,11 @@ const config = {
       const newUtilities = {
         "::selection": {
           "background-color": "#81adc8",
-          color: "#fff",
+          color: "#cd4631",
         },
         ".dark ::selection": {
           "background-color": "#cd4631",
-          color: "#000",
+          color: "#81adc8",
         },
       };
       addUtilities(newUtilities, ["responsive", "hover"]);
