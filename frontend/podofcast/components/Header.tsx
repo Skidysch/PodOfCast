@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 
 const Header = () => {
   return (
-    <header className="fixed top-6 container mx-auto flex justify-between">
+    <header className="fixed z-50 top-6 container mx-auto flex justify-between">
       <Link href="/">
         <StyledLogo />
       </Link>
