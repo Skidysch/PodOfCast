@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import "/app/styles/forms.css";
 import Link from "next/link";
 import Image from "next/image";
 import SignUpBg from "/public/sign-up-bg.jpg";
@@ -26,10 +25,10 @@ const signUpSchema = z.object({
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" }),
-  passwordRepeat: z
+  re_password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" }),
-  isCreator: z.boolean(),
+  is_creator: z.boolean(),
 });
 
 const SignUpForm = () => {
@@ -38,8 +37,8 @@ const SignUpForm = () => {
     defaultValues: {
       email: "",
       password: "",
-      passwordRepeat: "",
-      isCreator: false,
+      re_password: "",
+      is_creator: false,
     },
   });
 
@@ -123,7 +122,7 @@ const SignUpForm = () => {
               />
               <FormField
                 control={form.control}
-                name="passwordRepeat"
+                name="re_password"
                 render={({ field }) => (
                   <FormItem className="form-item">
                     <FormLabel className="form-label">
@@ -140,14 +139,23 @@ const SignUpForm = () => {
                   </FormItem>
                 )}
               />
-              <div className="items-center self-start flex space-x-2">
-                <Checkbox id="terms1" />
-                <div className="grid gap-1.5 leading-none">
-                  <label htmlFor="terms1" className="form-label">
+              <FormField
+                control={form.control}
+                name="is_creator"
+                render={({ field }) => (
+                  <FormItem className="flex items-center space-x-2 self-start">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <FormLabel className="form-label">
                     Are you a content creator?
-                  </label>
-                </div>
-              </div>
+                    </FormLabel>
+                  </FormItem>
+                )}
+              />
               <div className="flex flex-wrap gap-5 justify-center w-full">
                 <p className="text-sm font-medium mt-5">
                   Already have an account?{" "}
@@ -165,14 +173,7 @@ const SignUpForm = () => {
             </form>
           </Form>
           <p className="font-bold">OR</p>
-          <div className="flex flex-col gap-5">
-            <Button variant="outline" className="button--light w-[260px]">
-              <Link href="#">SIGN UP WITH GOOGLE</Link>
-            </Button>
-            <Button variant="outline" className="button--light w-[260px]">
-              <Link href="#">SIGN UP WITH SPOTIFY</Link>
-            </Button>
-          </div>
+          <OAuthSection />
         </div>
       </div>
     </div>

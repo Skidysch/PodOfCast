@@ -59,6 +59,7 @@ const Footer = () => {
         <div className="grid gap-y-5 gap-x-24 font-medium grid-cols-2 h-fit">
           {FooterLinks.map((item) => (
             <Link
+              key={item.name}
               className="self-start hover:text-primary transition-colors duration-300 ease-in-out"
               href={item.link}
             >
@@ -74,6 +75,7 @@ const Footer = () => {
             <div className="flex gap-10">
               {PlatformFooterList.map((item) => (
                 <Link
+                  key={item.name}
                   href={item.link}
                   className="hover:scale-90 transition-transform duration-300 ease-in-out flex justify-center items-center"
                 >
@@ -92,6 +94,7 @@ const Footer = () => {
             <div className="flex gap-5">
               {PlayMarketFooterList.map((item) => (
                 <Link
+                  key={item.name}
                   href={item.link}
                   className="hover:scale-90 transition-transform duration-300 ease-in-out"
                 >

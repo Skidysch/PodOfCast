@@ -117,14 +117,7 @@ const SignInForm = () => {
             </form>
           </Form>
           <p className="font-bold">OR</p>
-          <div className="flex flex-col gap-5">
-            <Button variant="outline" className="button--light w-[260px]" asChild>
-              <Link href="#">SIGN IN WITH GOOGLE</Link>
-            </Button>
-            <Button variant="outline" className="button--light w-[260px]" asChild>
-              <Link href="#">SIGN IN WITH SPOTIFY</Link>
-            </Button>
-          </div>
+          <OAuthSection />
         </div>
       </div>
       <div className="w-1/2 h-[960px] relative overflow-hidden">

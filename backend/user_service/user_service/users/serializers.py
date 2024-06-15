@@ -1,5 +1,8 @@
 from django.contrib.auth import get_user_model
-from djoser.serializers import UserSerializer, UserCreatePasswordRetypeSerializer
+from djoser.serializers import (
+    UserSerializer,
+    UserCreatePasswordRetypeSerializer,
+)
 
 User = get_user_model()
 

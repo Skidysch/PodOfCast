@@ -153,7 +153,7 @@ DJOSER = {
     "PASSWORD_RESET_CONFIRM_URL": "password/reset/confirm/{uid}/{token}",
     "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
     "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
-    "ACTIVATION_URL": "activate/{uid}/{token}",
+    "ACTIVATION_URL": "activation/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
     "USER_CREATE_PASSWORD_RETYPE": True,
     "LOGOUT_ON_PASSWORD_CHANGE": True,
@@ -173,7 +173,7 @@ DJOSER = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "AUTH_HEADER_TYPES": ("JWT",),
+    "AUTH_HEADER_TYPES": ("Bearer",),
 }
 
 # OAuth
@@ -189,8 +189,8 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ["first_name", "last_name"]
 SOCIAL_AUTH_SPOTIFY_KEY = os.getenv("SOCIAL_AUTH_SPOTIFY_KEY")
 SOCIAL_AUTH_SPOTIFY_SECRET = os.getenv("SOCIAL_AUTH_SPOTIFY_SECRET")
 SOCIAL_AUTH_SPOTIFY_SCOPE = [
-    'user-read-email',
-    'user-read-private',
-    'user-read-playback-state',
-    'user-read-currently-playing'
+    "user-read-email",
+    "user-read-private",
+    "user-read-playback-state",
+    "user-read-currently-playing",
 ]
