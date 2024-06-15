@@ -168,6 +168,8 @@ DJOSER = {
     "SOCIAL_AUTH_ALLOWED_REDIRECT_URIS": [
         "http://localhost:8000",
         "http://127.0.0.1:8000",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
     ],
     "SERIALIZERS": {
         "user_create_password_retype": "users.serializers.CustomUserCreatePasswordRetypeSerializer",
@@ -175,6 +177,10 @@ DJOSER = {
         "current_user": "users.serializers.CustomUserSerializer",
     },
 }
+
+# Domain and site name to use in Djoser email template
+DOMAIN = "localhost:3000"
+SITE_NAME = "Pod of Cast"
 
 # SimpleJWT
 SIMPLE_JWT = {
