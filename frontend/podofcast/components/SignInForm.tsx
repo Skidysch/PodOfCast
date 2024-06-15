@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
 import "/app/styles/forms.css";
 import Link from "next/link";
 import Image from "next/image";
@@ -58,7 +59,13 @@ const SignInForm = () => {
 
   return (
     <div className="flex w-full">
-      <div className="w-1/2 flex items-center backdrop-blur">
+      <motion.div
+        initial={{ x: "100%", opacity: 0 }}
+        exit={{ x: "100%", opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ ease: "easeInOut", duration: 0.5 }}
+        className="w-1/2 flex items-center backdrop-blur"
+      >
         <div className="flex flex-col gap-10 px-2 max-w-[536px] mx-auto items-center">
           <h1 className="text-6xl text-center font-bold leading-tight tracking-tight">
             Sign in to your
@@ -141,8 +148,13 @@ const SignInForm = () => {
           <p className="font-bold">OR</p>
           <OAuthSection />
         </div>
-      </div>
-      <div className="w-1/2 h-[960px] relative overflow-hidden">
+      </motion.div>
+      <motion.div
+        initial={{ x: "-100%", opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ ease: "easeInOut", duration: 0.5 }}
+        className="w-1/2 h-[960px] relative overflow-hidden"
+      >
         <Image
           src={SignInBg}
           layout="fill"
@@ -151,7 +163,7 @@ const SignInForm = () => {
           alt="Sign in image"
           className="absolute inset-0"
         />
-      </div>
+      </motion.div>
     </div>
   );
 };

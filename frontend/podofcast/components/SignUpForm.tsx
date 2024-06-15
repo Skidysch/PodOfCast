@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import SignUpBg from "/public/sign-up-bg.jpg";
@@ -65,7 +66,12 @@ const SignUpForm = () => {
 
   return (
     <div className="flex w-full">
-      <div className="w-1/2 h-[960px] relative overflow-hidden">
+      <motion.div
+        initial={{ x: "100%", opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ ease: "easeInOut", duration: 0.5 }}
+        className="w-1/2 h-[960px] relative overflow-hidden"
+      >
         <Image
           src={SignUpBg}
           layout="fill"
@@ -74,8 +80,13 @@ const SignUpForm = () => {
           alt="Sign in image"
           className="absolute inset-0"
         />
-      </div>
-      <div className="w-1/2 flex items-center backdrop-blur">
+      </motion.div>
+      <motion.div
+        initial={{ x: "-100%", opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ ease: "easeInOut", duration: 0.5 }}
+        className="w-1/2 flex items-center backdrop-blur"
+      >
         <div className="flex flex-col gap-10 px-2 max-w-[536px] mx-auto items-center">
           <h1 className="text-6xl text-center font-bold leading-tight tracking-tight">
             Create account
@@ -183,7 +194,7 @@ const SignUpForm = () => {
           <p className="font-bold">OR</p>
           <OAuthSection />
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
