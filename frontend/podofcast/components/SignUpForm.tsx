@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -18,7 +19,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import Image from "next/image";
 import SignUpBg from "/public/sign-up-bg.jpg";
-import { Axios } from "axios";
+import { useRegister } from "@/lib/reactQuery/authMutations";
+import { useRedirectIfAuthenticated } from "@/lib/hooks/useRedirectIfAuthenticated";
+import useAuthStore from "@/store/useAuthStore";
+import "/app/styles/forms.css";
+import OAuthSection from "@/components/OAuthSection";
 
 const signUpSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -32,6 +37,14 @@ const signUpSchema = z.object({
 });
 
 const SignUpForm = () => {
+  useRedirectIfAuthenticated();
+  const { mutate, isPending } = useRegister();
+  const { errorMessage, clearState } = useAuthStore();
+
+  useEffect(() => {
+    clearState();
+  }, []);
+
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -43,21 +56,11 @@ const SignUpForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
-    const axios = new Axios({
-      baseURL: "http://localhost:8000",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH",
-        "Access-Control-Allow-Headers":
-          "Origin, X-Requested-With, Content-Type, Accept, Authorization",
-        "Access-Control-Allow-Credentials": "true",
-      },
-      withCredentials: true,
-    });
-    const res = await axios.post("/auth/users/create/", JSON.stringify(values));
-
-    
+    try {
+      await mutate(values);
+    } catch (error) {
+      console.error("Sign up failed:", error);
+    }
   }
 
   return (
@@ -151,7 +154,7 @@ const SignUpForm = () => {
                       />
                     </FormControl>
                     <FormLabel className="form-label">
-                    Are you a content creator?
+                      Are you a content creator?
                     </FormLabel>
                   </FormItem>
                 )}
@@ -167,9 +170,14 @@ const SignUpForm = () => {
                   </Link>
                 </p>
               </div>
-              <Button className="button w-[260px]" type="submit">
-                SIGN UP
+              <Button
+                className="button w-[260px]"
+                type="submit"
+                disabled={isPending}
+              >
+                {isPending ? "LOADING..." : "SIGN UP"}
               </Button>
+              {errorMessage && <p className="form-error">{errorMessage}</p>}
             </form>
           </Form>
           <p className="font-bold">OR</p>

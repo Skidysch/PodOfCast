@@ -4,6 +4,7 @@ import "./styles/globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ReactQueryProvider from "@/lib/reactQuery/ReactQueryProvider";
 
 const montserratAlternates = Montserrat_Alternates({
   subsets: ["latin"],
@@ -29,9 +30,11 @@ export default function RootLayout({
           montserratAlternates.variable
         )}
       >
-        <Header />
-        {children}
-        <Footer />
+        <ReactQueryProvider>
+          <Header />
+          {children}
+          <Footer />
+        </ReactQueryProvider>
       </body>
     </html>
   );

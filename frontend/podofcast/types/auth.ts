@@ -1,0 +1,80 @@
+export interface IAuthState {
+  access: string | null;
+  refresh: string | null;
+  user: User | null;
+  isAuthenticated: boolean;
+  confirmationEmail: string | null;
+  errorMessage: string | null;
+  provider: "google-oauth2" | "spotify" | null;
+  setAccess: (access: string) => void;
+  setRefresh: (refresh: string) => void;
+  setUser: (user: User) => void;
+  setIsAuthenticated: (value: boolean) => void;
+  setConfirmationEmail: (value: string) => void;
+  setErrorMessage: (value: string) => void;
+  setProvider: (provider: "google-oauth2" | "spotify") => void;
+  clearUser: () => void;
+  clearAccess: () => void;
+  clearRefresh: () => void;
+  clearState: () => void;
+  clearProvider: () => void;
+  hydrate: () => void;
+}
+
+export interface User {
+  id: number;
+  email: string;
+  name?: string;
+  bio?: string;
+  profile_picture?: string;
+  is_company?: boolean;
+  is_creator: boolean;
+  // followed_podcasts: string;
+  // followed_blogs: string;
+}
+
+export interface UserRegister {
+  email: string;
+  password: string;
+  re_password: string;
+  is_creator: boolean;
+}
+
+export interface UserActivation {
+  uid: string;
+  token: string;
+}
+
+export interface UserLogin {
+  email: string;
+  password: string;
+}
+
+export interface OAuthLogin {
+  provider: "google-oauth2" | "spotify" | null;
+}
+
+export interface OAuthLoginResponse extends OAuthLogin {
+  authorizationUrl: string;
+}
+
+export interface OAuthParams {
+  state: string;
+  code: string;
+}
+
+export interface OAuthAuthenticate extends OAuthLogin, OAuthParams {}
+
+export interface AuthResponse {
+  access: string;
+  refresh: string;
+}
+
+export interface UserRestorePassword {
+  email: string;
+}
+
+export interface UserResetPassword {
+  new_password: string;
+  re_new_password: string;
+}

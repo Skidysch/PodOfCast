@@ -15,12 +15,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import "/app/styles/forms.css";
+import { useRestorePassword } from "@/lib/reactQuery/authMutations";
+import { useEffect } from "react";
+import useAuthStore from "@/store/useAuthStore";
 
 const RestorePasswordSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
 });
 
 const RestorePasswordForm = () => {
+  const { mutate, isPending } = useRestorePassword();
+  const { clearState, errorMessage } = useAuthStore();
+
+  useEffect(() => {
+    clearState();
+  }, []);
+
   const form = useForm<z.infer<typeof RestorePasswordSchema>>({
     resolver: zodResolver(RestorePasswordSchema),
     defaultValues: {
@@ -28,8 +38,12 @@ const RestorePasswordForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof RestorePasswordSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof RestorePasswordSchema>) {
+    try {
+      await mutate(values);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -58,9 +72,14 @@ const RestorePasswordForm = () => {
               </FormItem>
             )}
           />
-          <Button className="button w-[260px]" type="submit">
-            CONTINUE
+          <Button
+            className="button w-[260px]"
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending ? "LOADING..." : "CONTINUE"}
           </Button>
+          {errorMessage && <p className="form-error">{errorMessage}</p>}
         </form>
       </Form>
     </div>

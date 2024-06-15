@@ -18,6 +18,11 @@ import "/app/styles/forms.css";
 import Link from "next/link";
 import Image from "next/image";
 import SignInBg from "/public/sign-in-bg.jpg";
+import { useLogin } from "@/lib/reactQuery/authMutations";
+import { useRedirectIfAuthenticated } from "@/lib/hooks/useRedirectIfAuthenticated";
+import useAuthStore from "@/store/useAuthStore";
+import { useEffect } from "react";
+import OAuthSection from "@/components/OAuthSection";
 
 const signInSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -27,6 +32,14 @@ const signInSchema = z.object({
 });
 
 const SignInForm = () => {
+  useRedirectIfAuthenticated();
+  const { mutate, isPending } = useLogin();
+  const { errorMessage, clearState } = useAuthStore();
+
+  useEffect(() => {
+    clearState();
+  }, []);
+
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -35,8 +48,12 @@ const SignInForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof signInSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof signInSchema>) {
+    try {
+      await mutate(values);
+    } catch (error) {
+      console.error("Sign in failed:", error);
+    }
   }
 
   return (
@@ -111,9 +128,14 @@ const SignInForm = () => {
                   </Link>
                 </p>
               </div>
-              <Button className="button w-[260px]" type="submit">
-                SIGN IN
+              <Button
+                className="button w-[260px]"
+                type="submit"
+                disabled={isPending}
+              >
+                {isPending ? "LOADING..." : "SIGN IN"}
               </Button>
+              {errorMessage && <p className="form-error">{errorMessage}</p>}
             </form>
           </Form>
           <p className="font-bold">OR</p>
@@ -121,7 +143,14 @@ const SignInForm = () => {
         </div>
       </div>
       <div className="w-1/2 h-[960px] relative overflow-hidden">
-        <Image src={SignInBg} layout="fill" objectFit="cover" objectPosition="center" alt="Sign in image" className="absolute inset-0"/>
+        <Image
+          src={SignInBg}
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+          alt="Sign in image"
+          className="absolute inset-0"
+        />
       </div>
     </div>
   );

@@ -15,27 +15,46 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import "/app/styles/forms.css";
+import { useResetPassword } from "@/lib/reactQuery/authMutations";
+import useAuthStore from "@/store/useAuthStore";
+import { useEffect } from "react";
 
 const ResetPasswordSchema = z.object({
-  password: z
+  uid: z.string().max(3),
+  token: z.string().max(100),
+  new_password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" }),
-  passwordRepeat: z
+  re_new_password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" }),
 });
 
-const ResetPasswordForm = () => {
+const ResetPasswordForm = ({
+  params,
+}: {
+  params: { uid: string; token: string };
+}) => {
+  const { mutate, isPending } = useResetPassword();
+  const { clearState, errorMessage } = useAuthStore();
+  const { uid, token } = params;
+
+  useEffect(() => {
+    clearState();
+  }, []);
+
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({
     resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
-      password: "",
-      passwordRepeat: "",
+      uid: uid,
+      token: token,
+      new_password: "",
+      re_new_password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof ResetPasswordSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof ResetPasswordSchema>) {
+    await mutate(values);
   }
 
   return (
@@ -47,7 +66,7 @@ const ResetPasswordForm = () => {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 form">
           <FormField
             control={form.control}
-            name="password"
+            name="new_password"
             render={({ field }) => (
               <FormItem className="form-item">
                 <FormLabel className="form-label">
@@ -66,7 +85,7 @@ const ResetPasswordForm = () => {
           />
           <FormField
             control={form.control}
-            name="passwordRepeat"
+            name="re_new_password"
             render={({ field }) => (
               <FormItem className="form-item">
                 <FormLabel className="form-label">
@@ -83,9 +102,14 @@ const ResetPasswordForm = () => {
               </FormItem>
             )}
           />
-          <Button className="button w-[260px]" type="submit">
-            SAVE
+          <Button
+            className="button w-[260px]"
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending ? "LOADING..." : "SAVE"}
           </Button>
+          {errorMessage && <p className="form-error">{errorMessage}</p>}
         </form>
       </Form>
     </div>
