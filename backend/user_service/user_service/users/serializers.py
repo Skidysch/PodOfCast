@@ -18,8 +18,8 @@ class CustomUserSerializer(UserSerializer):
             "profile_picture",
             "is_company",
             "is_creator",
-            "followed_podcasts",
-            "followed_blogs",
+            # "followed_podcasts",
+            # "followed_blogs",
         )
 
 
