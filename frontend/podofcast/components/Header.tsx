@@ -25,10 +25,7 @@ const Header = () => {
           </Link>
         ))}
       </ul>
-      <div className="flex gap-5 items-center">
-        <Button variant="outline" className="button--light" asChild>
-          <Link href="#">RECENT EPISODES</Link>
-        </Button>
+      <div className="flex gap-5 items-center max-md:hidden">
         {isAuthenticated ? (
           <UserMenuButton />
         ) : (

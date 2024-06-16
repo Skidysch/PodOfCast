@@ -42,6 +42,17 @@ const UserMenuButton = () => {
               className={`button--light transition-transform duration-300 ease-in-out delay-100 ${
                 isDropdownVisible ? "translate-x-0" : "translate-x-[200%]"
               }`}
+              asChild
+            >
+              <Link href="#">RECENT EPISODES</Link>
+            </Button>
+          </li>
+          <li>
+            <Button
+              variant="outline"
+              className={`button--light transition-transform duration-300 ease-in-out delay-150 ${
+                isDropdownVisible ? "translate-x-0" : "translate-x-[200%]"
+              }`}
               onClick={() => mutate()}
             >
               Logout
