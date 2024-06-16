@@ -72,7 +72,7 @@ const Footer = () => {
             <p className="font-medium text-destructive">
               Listen episodes on your fav platform:
             </p>
-            <div className="flex gap-10">
+            <div className="flex gap-8">
               {PlatformFooterList.map((item) => (
                 <Link
                   key={item.name}

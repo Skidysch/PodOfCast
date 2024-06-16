@@ -1,5 +1,5 @@
 import useAuthStore from "@/store/useAuthStore";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useLogout } from "@/lib/reactQuery/authMutations";
