@@ -110,11 +110,18 @@ const MobileNav = () => {
               </div>
             </div>
           ) : (
-            <SheetClose asChild>
-              <Button className="button" asChild>
-                <Link href="/sign-in">SIGN IN</Link>
-              </Button>
-            </SheetClose>
+            <div className="flex flex-col gap-5 items-center">
+              <SheetClose asChild>
+                <Button className="button" asChild>
+                  <Link href="/sign-in">SIGN IN</Link>
+                </Button>
+              </SheetClose>
+              <SheetClose asChild>
+                <Button className="button" asChild>
+                  <Link href="/sign-up">SIGN UP</Link>
+                </Button>
+              </SheetClose>
+            </div>
           )}
         </div>
       </SheetContent>

@@ -26,15 +26,18 @@ const Header = () => {
           </Link>
         ))}
       </ul>
-      <div className="flex gap-5 items-center max-md:hidden">
         {isAuthenticated ? (
           <UserMenuButton />
         ) : (
-          <Button className="button" asChild>
-            <Link href="/sign-in">SIGN IN</Link>
-          </Button>
+          <div className="flex gap-5 items-center max-md:hidden">
+            <Button className="button" asChild>
+              <Link href="/sign-in">SIGN IN</Link>
+            </Button>
+            <Button className="button" asChild>
+              <Link href="/sign-up">SIGN UP</Link>
+            </Button>
+          </div>
         )}
-      </div>
       <div className="md:hidden flex items-center">
         <MobileNav />
       </div>
