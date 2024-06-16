@@ -1,6 +1,6 @@
 "use client";
 
-import { useOAuthAuthenticate } from "@/lib/reactQuery/authMutations";
+import { useOAuthAuthenticate } from "@/api/reactQuery/authMutations";
 import useAuthStore from "@/store/useAuthStore";
 import { OAuthAuthenticate } from "@/types/auth";
 import { useSearchParams, usePathname } from "next/navigation";

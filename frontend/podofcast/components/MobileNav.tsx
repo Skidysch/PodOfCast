@@ -11,7 +11,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import useAuthStore from "@/store/useAuthStore";
 import UserMenuButton from "@/components/UserMenuButton";
-import { useLogout } from "@/lib/reactQuery/authMutations";
+import { useLogout } from "@/api/reactQuery/authMutations";
 
 const MobileNav = () => {
   const { user, isAuthenticated } = useAuthStore();

@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { useOAuthLogin } from "@/lib/reactQuery/authMutations";
+import { useOAuthLogin } from "@/api/reactQuery/authMutations";
 import Loader from "@/components/Loader";
 
 const OAuthSection = () => {

@@ -4,7 +4,7 @@ import "./styles/globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ReactQueryProvider from "@/lib/reactQuery/ReactQueryProvider";
+import ReactQueryProvider from "@/api/reactQuery/ReactQueryProvider";
 
 const montserratAlternates = Montserrat_Alternates({
   subsets: ["latin"],

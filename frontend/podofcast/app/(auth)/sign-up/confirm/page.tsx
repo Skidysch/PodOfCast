@@ -1,7 +1,7 @@
 "use client";
 
 import useAuthStore from "@/store/useAuthStore";
-import { useRedirectIfAuthenticated } from "@/lib/hooks/useRedirectIfAuthenticated";
+import { useRedirectIfAuthenticated } from "@/hooks/useRedirectIfAuthenticated";
 
 export default function Home() {
   useRedirectIfAuthenticated();

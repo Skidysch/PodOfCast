@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useActivation } from "@/lib/reactQuery/authMutations";
+import { useActivation } from "@/api/reactQuery/authMutations";
 
 export default function Home({
   params,

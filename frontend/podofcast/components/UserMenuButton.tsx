@@ -2,7 +2,7 @@ import useAuthStore from "@/store/useAuthStore";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { useLogout } from "@/lib/reactQuery/authMutations";
+import { useLogout } from "@/api/reactQuery/authMutations";
 
 const UserMenuButton = () => {
   const { user } = useAuthStore();

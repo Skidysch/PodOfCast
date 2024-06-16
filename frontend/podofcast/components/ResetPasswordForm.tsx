@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import "/app/styles/forms.css";
-import { useResetPassword } from "@/lib/reactQuery/authMutations";
+import { useResetPassword } from "@/api/reactQuery/authMutations";
 import useAuthStore from "@/store/useAuthStore";
 import { useEffect } from "react";
 import Loader from "@/components/Loader";
