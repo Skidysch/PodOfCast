@@ -33,8 +33,8 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="pt-[140px] pb-20 container bg flex flex-col gap-32 justify-between">
-      <div className="flex justify-between">
+    <footer className="pt-20 pb-12 lg:pt-[140px] lg:pb-20 container bg flex flex-col gap-20 lg:gap-32 justify-between">
+      <div className="flex justify-start sm:justify-evenly lg:justify-between flex-wrap lg:flex-nowrap gap-10">
         <div className="flex flex-col gap-10 max-w-[250px]">
           <div className="flex gap-6 items-baseline">
             <Link href="/">
@@ -67,7 +67,7 @@ const Footer = () => {
             </Link>
           ))}
         </div>
-        <div className="flex flex-col gap-[60px]">
+        <div className="flex flex-col sm:max-lg:flex-row gap-[60px]">
           <div className="flex flex-col gap-5">
             <p className="font-medium text-destructive">
               Listen episodes on your fav platform:

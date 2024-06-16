@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { HeaderLinks } from "@/constants";
 import useAuthStore from "@/store/useAuthStore";
 import UserMenuButton from "./UserMenuButton";
+import MobileNav from "./MobileNav";
 
 const Header = () => {
   const { isAuthenticated } = useAuthStore();
@@ -14,7 +15,7 @@ const Header = () => {
       <Link href="/">
         <StyledLogo />
       </Link>
-      <ul className="flex gap-[60px] items-center leading-[1.6] font-bold">
+      <ul className="flex gap-10 lg:gap-[60px] items-center leading-[1.6] font-bold max-md:hidden">
         {HeaderLinks.map((item) => (
           <Link
             key={item.name}
@@ -33,6 +34,9 @@ const Header = () => {
             <Link href="/sign-in">SIGN IN</Link>
           </Button>
         )}
+      </div>
+      <div className="md:hidden flex items-center">
+        <MobileNav />
       </div>
     </header>
   );
