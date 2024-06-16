@@ -18,6 +18,7 @@ import "/app/styles/forms.css";
 import { useRestorePassword } from "@/lib/reactQuery/authMutations";
 import { useEffect } from "react";
 import useAuthStore from "@/store/useAuthStore";
+import Loader from "@/components/Loader";
 
 const RestorePasswordSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -77,7 +78,7 @@ const RestorePasswordForm = () => {
             type="submit"
             disabled={isPending}
           >
-            {isPending ? "LOADING..." : "CONTINUE"}
+            {isPending ? <Loader /> : "CONTINUE"}
           </Button>
           {errorMessage && <p className="form-error">{errorMessage}</p>}
         </form>

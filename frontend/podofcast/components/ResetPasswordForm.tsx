@@ -18,6 +18,7 @@ import "/app/styles/forms.css";
 import { useResetPassword } from "@/lib/reactQuery/authMutations";
 import useAuthStore from "@/store/useAuthStore";
 import { useEffect } from "react";
+import Loader from "@/components/Loader";
 
 const ResetPasswordSchema = z.object({
   uid: z.string().max(3),
@@ -107,7 +108,7 @@ const ResetPasswordForm = ({
             type="submit"
             disabled={isPending}
           >
-            {isPending ? "LOADING..." : "SAVE"}
+            {isPending ? <Loader /> : "SAVE"}
           </Button>
           {errorMessage && <p className="form-error">{errorMessage}</p>}
         </form>

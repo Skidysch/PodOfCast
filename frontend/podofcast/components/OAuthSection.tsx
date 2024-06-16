@@ -1,5 +1,6 @@
 import { Button } from "./ui/button";
 import { useOAuthLogin } from "@/lib/reactQuery/authMutations";
+import Loader from "@/components/Loader";
 
 const OAuthSection = () => {
   const { mutate, isPending } = useOAuthLogin();
@@ -12,7 +13,7 @@ const OAuthSection = () => {
         onClick={() => mutate({ provider: "google-oauth2" })}
         disabled={isPending}
       >
-        {isPending ? "LOADING..." : "SIGN IN WITH GOOGLE"}
+        {isPending ? <Loader /> : "SIGN IN WITH GOOGLE"}
       </Button>
       <Button
         variant="outline"
@@ -20,7 +21,7 @@ const OAuthSection = () => {
         onClick={() => mutate({ provider: "spotify" })}
         disabled={isPending}
       >
-        {isPending ? "LOADING..." : "SIGN IN WITH SPOTIFY"}
+        {isPending ? <Loader /> : "SIGN IN WITH SPOTIFY"}
       </Button>
     </div>
   );

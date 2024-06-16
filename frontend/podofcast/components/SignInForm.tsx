@@ -24,6 +24,7 @@ import { useRedirectIfAuthenticated } from "@/lib/hooks/useRedirectIfAuthenticat
 import useAuthStore from "@/store/useAuthStore";
 import { useEffect } from "react";
 import OAuthSection from "@/components/OAuthSection";
+import Loader from "@/components/Loader";
 
 const signInSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -140,7 +141,7 @@ const SignInForm = () => {
                 type="submit"
                 disabled={isPending}
               >
-                {isPending ? "LOADING..." : "SIGN IN"}
+                {isPending ? <Loader /> : "SIGN IN"}
               </Button>
               {errorMessage && <p className="form-error">{errorMessage}</p>}
             </form>
