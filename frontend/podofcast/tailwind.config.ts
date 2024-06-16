@@ -1,5 +1,6 @@
 const { fontFamily } = require("tailwindcss/defaultTheme");
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config = {
   darkMode: ["class"],
@@ -84,7 +85,7 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"),
-    function ({ addUtilities }) {
+    plugin(function ({ addUtilities }) {
       const newUtilities = {
         "::selection": {
           "background-color": "#81adc8",
@@ -95,8 +96,8 @@ const config = {
           color: "#81adc8",
         },
       };
-      addUtilities(newUtilities, ["responsive", "hover"]);
-    },
+      addUtilities(newUtilities);
+    }),
   ],
 } satisfies Config;
 
