@@ -65,10 +65,10 @@ const SignInForm = () => {
         exit={{ x: "100%", opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.5 }}
-        className="w-1/2 flex items-center backdrop-blur"
+        className="w-full lg:w-1/2 flex items-center backdrop-blur"
       >
-        <div className="flex flex-col gap-10 px-2 max-w-[536px] mx-auto items-center">
-          <h1 className="text-6xl text-center font-bold leading-tight tracking-tight">
+        <div className="flex flex-col gap-5 md:gap-10 px-4 max-w-[536px] mx-auto items-center">
+          <h1 className="text-4xl md:text-6xl text-center font-bold leading-tight tracking-tight">
             Sign in to your
             <br />
             account
@@ -116,8 +116,8 @@ const SignInForm = () => {
                   </FormItem>
                 )}
               />
-              <div className="flex flex-wrap gap-5 justify-between w-full">
-                <p className="text-sm font-medium mt-5">
+              <div className="flex flex-wrap md:gap-5 justify-between w-full">
+                <p className="text-sm font-medium md:mt-5">
                   Don’t have an account?{" "}
                   <Link
                     href="/sign-up"
@@ -126,7 +126,7 @@ const SignInForm = () => {
                     Sign up
                   </Link>
                 </p>
-                <p className="text-sm font-medium mt-5">
+                <p className="text-sm font-medium md:mt-5">
                   Forgot password?{" "}
                   <Link
                     href="/restore-password"
@@ -154,7 +154,7 @@ const SignInForm = () => {
         initial={{ x: "-100%", opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.5 }}
-        className="w-1/2 h-[960px] relative overflow-hidden"
+        className="w-1/2 h-[960px] relative overflow-hidden max-lg:hidden"
       >
         <Image
           src={SignInBg}
