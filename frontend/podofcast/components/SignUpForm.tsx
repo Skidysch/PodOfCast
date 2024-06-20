@@ -95,7 +95,7 @@ const SignUpForm = () => {
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-5 form"
+              className="form"
             >
               <FormField
                 control={form.control}
@@ -183,7 +183,7 @@ const SignUpForm = () => {
                 </p>
               </div>
               <Button
-                className="button w-[260px]"
+                className="button form-button"
                 type="submit"
                 disabled={isPending}
               >

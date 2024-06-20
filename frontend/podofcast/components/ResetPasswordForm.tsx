@@ -64,7 +64,7 @@ const ResetPasswordForm = ({
         Reset password
       </h1>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 form">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="form">
           <FormField
             control={form.control}
             name="new_password"
@@ -104,7 +104,7 @@ const ResetPasswordForm = ({
             )}
           />
           <Button
-            className="button w-[260px]"
+            className="button form-button"
             type="submit"
             disabled={isPending}
           >

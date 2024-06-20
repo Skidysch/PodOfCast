@@ -11,8 +11,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
       <motion.div
         key={pathname}
         className="w-full"
-        initial={{ x: "100%" }}
-        animate={{ x: 0 }}
+        initial={{ y: "-100%" }}
+        animate={{ y: 0 }}
         transition={{ ease: "easeInOut", duration: 0.5 }}
       >
         {children}

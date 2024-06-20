@@ -9,7 +9,7 @@ const OAuthSection = () => {
     <div className="flex flex-col gap-5">
       <Button
         variant="outline"
-        className="button--light w-[260px]"
+        className="button--light form-button"
         onClick={() => mutate({ provider: "google-oauth2" })}
         disabled={isPending}
       >
@@ -17,7 +17,7 @@ const OAuthSection = () => {
       </Button>
       <Button
         variant="outline"
-        className="button--light w-[260px]"
+        className="button--light form-button"
         onClick={() => mutate({ provider: "spotify" })}
         disabled={isPending}
       >
