@@ -10,7 +10,15 @@ class UserAdmin(BaseUserAdmin):
         (None, {"fields": ("email", "password")}),
         (
             _("Personal info"),
-            {"fields": ("name", "bio", "profile_picture")},
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "company_name",
+                    "bio",
+                    "profile_picture",
+                )
+            },
         ),
         (
             _("Permissions"),
@@ -52,12 +60,19 @@ class UserAdmin(BaseUserAdmin):
     list_display = (
         "id",
         "email",
-        "name",
+        "first_name",
+        "last_name",
+        "company_name",
         "is_company",
         "is_creator",
         "is_staff",
     )
-    search_fields = ("email", "name")
+    search_fields = (
+        "email",
+        "first_name",
+        "last_name",
+        "company_name",
+    )
     ordering = ("email",)
 
 
