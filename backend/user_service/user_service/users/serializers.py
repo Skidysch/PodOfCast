@@ -13,13 +13,18 @@ class CustomUserSerializer(UserSerializer):
         fields = (
             "id",
             "email",
-            "name",
+            "first_name",
+            "last_name",
+            "company_name",
             "bio",
             "profile_picture",
             "is_company",
             "is_creator",
-            # "followed_podcasts",
-            # "followed_blogs",
+            "followed_users",
+            "followed_podcasts",
+            "followed_blogs",
+            "date_joined",
+            "last_login",
         )
 
 
