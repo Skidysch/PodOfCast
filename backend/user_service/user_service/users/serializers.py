@@ -18,13 +18,14 @@ class CustomUserSerializer(UserSerializer):
             "company_name",
             "bio",
             "profile_picture",
+            "date_of_birth",
             "is_company",
             "is_creator",
             "followed_users",
             "followed_podcasts",
             "followed_blogs",
             "date_joined",
-            "last_login",
+            "last_visit",
         )
 
 

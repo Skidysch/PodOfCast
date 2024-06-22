@@ -29,6 +29,9 @@ export interface User {
   profile_picture?: string;
   is_company?: boolean;
   is_creator: boolean;
+  date_of_birth: string;
+  date_joined: string;
+  last_visit: string;
   // followed_podcasts: string;
   // followed_blogs: string;
 }
