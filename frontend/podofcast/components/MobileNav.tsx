@@ -1,17 +1,16 @@
-import { useState } from "react";
+import { useLogout } from "@/api/reactQuery/authMutations";
+import Burger from "@/components/Burger";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetTrigger,
-  SheetClose,
 } from "@/components/ui/sheet";
-import Burger from "@/components/Burger";
 import { HeaderLinks } from "@/constants";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import useAuthStore from "@/store/useAuthStore";
-import UserMenuButton from "@/components/UserMenuButton";
-import { useLogout } from "@/api/reactQuery/authMutations";
+import Link from "next/link";
+import { useState } from "react";
 
 const MobileNav = () => {
   const { user, isAuthenticated } = useAuthStore();
@@ -49,7 +48,7 @@ const MobileNav = () => {
                 className="button"
                 onClick={() => setIsDropdownVisible(!isDropdownVisible)}
               >
-                {user?.name || user?.email}
+                {user?.first_name || user?.email}
               </Button>
               <div
                 className={`overflow-hidden w-full absolute right-0 top-16 p-5 bg-secondary rounded-lg transition-all duration-300 ease-in-out ${
@@ -63,7 +62,7 @@ const MobileNav = () => {
                     <SheetClose asChild>
                       <Button
                         variant="outline"
-                        className={`button--light transition-transform duration-300 ease-in-out delay-50 ${
+                        className={`button button--light transition-transform duration-300 ease-in-out delay-50 ${
                           isDropdownVisible
                             ? "translate-x-0"
                             : "translate-x-[200%]"
@@ -79,7 +78,7 @@ const MobileNav = () => {
                     <SheetClose asChild>
                       <Button
                         variant="outline"
-                        className={`button--light transition-transform duration-300 ease-in-out delay-100 ${
+                        className={`button button--light transition-transform duration-300 ease-in-out delay-100 ${
                           isDropdownVisible
                             ? "translate-x-0"
                             : "translate-x-[200%]"
@@ -95,7 +94,7 @@ const MobileNav = () => {
                     <SheetClose asChild>
                       <Button
                         variant="outline"
-                        className={`button--light transition-transform duration-300 ease-in-out delay-150 ${
+                        className={`button button--light transition-transform duration-300 ease-in-out delay-150 ${
                           isDropdownVisible
                             ? "translate-x-0"
                             : "translate-x-[200%]"

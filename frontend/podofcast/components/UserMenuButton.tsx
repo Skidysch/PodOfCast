@@ -1,8 +1,8 @@
+import { useLogout } from "@/api/reactQuery/authMutations";
 import useAuthStore from "@/store/useAuthStore";
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import Link from "next/link";
-import { useLogout } from "@/api/reactQuery/authMutations";
 
 const UserMenuButton = () => {
   const { user } = useAuthStore();
@@ -15,7 +15,7 @@ const UserMenuButton = () => {
         className="button"
         onClick={() => setIsDropdownVisible(!isDropdownVisible)}
       >
-        {user?.name || user?.email}
+        {user?.first_name || user?.email}
       </Button>
       <div
         className={`overflow-hidden w-full absolute right-0 top-16 p-5 bg-secondary rounded-lg transition-all duration-300 ease-in-out ${
@@ -28,7 +28,7 @@ const UserMenuButton = () => {
           <li>
             <Button
               variant="outline"
-              className={`button--light transition-transform duration-300 ease-in-out delay-50 ${
+              className={`button button--light transition-transform duration-300 ease-in-out delay-50 ${
                 isDropdownVisible ? "translate-x-0" : "translate-x-[200%]"
               }`}
               asChild
@@ -39,7 +39,7 @@ const UserMenuButton = () => {
           <li>
             <Button
               variant="outline"
-              className={`button--light transition-transform duration-300 ease-in-out delay-100 ${
+              className={`button button--light transition-transform duration-300 ease-in-out delay-100 ${
                 isDropdownVisible ? "translate-x-0" : "translate-x-[200%]"
               }`}
               asChild
@@ -50,7 +50,7 @@ const UserMenuButton = () => {
           <li>
             <Button
               variant="outline"
-              className={`button--light transition-transform duration-300 ease-in-out delay-150 ${
+              className={`button button--light transition-transform duration-300 ease-in-out delay-150 ${
                 isDropdownVisible ? "translate-x-0" : "translate-x-[200%]"
               }`}
               onClick={() => mutate()}

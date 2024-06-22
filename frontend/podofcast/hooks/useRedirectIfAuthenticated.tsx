@@ -10,7 +10,7 @@ export const useRedirectIfAuthenticated = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.push('/');
+      router.push("/profile/me");
     }
   }, [isAuthenticated, router]);
 };

@@ -83,5 +83,13 @@
 }
 
 .button--light {
-  @apply font-bold text-sm text-black py-3 px-6 bg-white border-black border-2 rounded-lg hover:bg-secondary hover:text-white hover:border-secondary transition-all duration-300 ease-in-out;
+  @apply bg-white border-black border-2 rounded-lg hover:bg-secondary hover:text-white hover:border-secondary;
+}
+
+.button--small {
+  @apply py-2 px-3 text-xs leading-none h-auto;
+}
+
+.button--alert {
+  @apply bg-primary hover:bg-white !important;
 }

@@ -24,10 +24,12 @@ export interface IAuthState {
 export interface User {
   id: number;
   email: string;
-  name?: string;
+  first_name?: string;
+  last_name?: string;
+  company_name?: string;
   bio?: string;
   profile_picture?: string;
-  is_company?: boolean;
+  is_company: boolean;
   is_creator: boolean;
   date_of_birth: string;
   date_joined: string;

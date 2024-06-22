@@ -11,7 +11,7 @@ import MobileNav from "./MobileNav";
 const Header = () => {
   const { isAuthenticated } = useAuthStore();
   return (
-    <header className="fixed z-50 pt-6 bg-background rounded-bl-3xl rounded-br-3xl container mx-auto flex justify-between">
+    <header className="fixed z-50 pt-6 bg-background rounded-bl-3xl rounded-br-3xl container mx-auto flex justify-between items-center">
       <Link href="/">
         <StyledLogo />
       </Link>

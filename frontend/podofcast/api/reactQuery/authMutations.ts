@@ -96,7 +96,7 @@ export const useOAuthLogin = () => {
     mutationFn: (data: OAuthLogin) => oAuthLogin(data),
     onSuccess: (data: OAuthLoginResponse) => {
       console.log("oauth login success");
-      setProvider(data.provider);
+      setProvider(data.provider!);
       window.location.href = data.authorizationUrl;
     },
     onError: () => {
@@ -115,7 +115,6 @@ export const useOAuthAuthenticate = () => {
     onSuccess: () => {
       console.log("oauth authenticate success");
       setIsAuthenticated(true);
-      router.push("/");
     },
     onError: () => {
       console.log("oauth authenticate error");
