@@ -46,6 +46,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
         null=True,
     )
+    followed_users = models.ManyToManyField(
+        "self",
+        related_name="followers",
+        symmetrical=False,
+        blank=True,
+    )  # List of podcast UUIDs
     followed_podcasts = models.JSONField(
         default=list,
         blank=True,
