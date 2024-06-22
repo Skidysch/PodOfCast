@@ -17,6 +17,8 @@ class UserAdmin(BaseUserAdmin):
                     "company_name",
                     "bio",
                     "profile_picture",
+                    "is_company",
+                    "is_creator",
                 )
             },
         ),
@@ -60,9 +62,7 @@ class UserAdmin(BaseUserAdmin):
     list_display = (
         "id",
         "email",
-        "first_name",
-        "last_name",
-        "company_name",
+        "get_full_name",
         "is_company",
         "is_creator",
         "is_staff",

@@ -40,7 +40,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     company_name = models.CharField(max_length=255, blank=True, null=True)
-    bio = models.TextField()
+    bio = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(
         upload_to=user_profile_picture_path,
         blank=True,
@@ -55,6 +55,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
 
     objects = UserManager()
+
+    def get_full_name(self):
+        return (
+            f"{self.company_name.capitalize()}"
+            if self.is_company
+            else f"{self.first_name} {self.last_name}"
+        )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
