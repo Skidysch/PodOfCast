@@ -46,8 +46,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         blank=True,
         null=True,
     )
-    followed_podcasts = models.JSONField(default=list)  # List of podcast UUIDs
-    followed_blogs = models.JSONField(default=list)  # List of blog UUIDs
+    followed_podcasts = models.JSONField(
+        default=list,
+        blank=True,
+    )  # List of podcast UUIDs
+    followed_blogs = models.JSONField(
+        default=list,
+        blank=True,
+    )  # List of blog UUIDs
     is_creator = models.BooleanField(default=False)
     is_company = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
