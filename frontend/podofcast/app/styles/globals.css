@@ -83,7 +83,7 @@
 }
 
 .button--light {
-  @apply bg-white border-black border-2 rounded-lg hover:bg-secondary hover:text-white hover:border-secondary;
+  @apply bg-white text-black border-black border-2 rounded-lg hover:bg-secondary hover:text-white hover:border-secondary;
 }
 
 .button--small {

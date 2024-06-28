@@ -12,7 +12,7 @@ const UserMenuButton = () => {
   return (
     <div className="relative">
       <Button
-        className="button"
+        className="button min-w-[220px]"
         onClick={() => setIsDropdownVisible(!isDropdownVisible)}
       >
         {user?.first_name || user?.email}
