@@ -59,6 +59,9 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      backgroundImage: theme => ({
+        'profile-header-gradient': 'linear-gradient(to bottom, #81ADC8 0%, #fff 33%)',
+      }),
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
