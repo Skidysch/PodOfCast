@@ -34,11 +34,22 @@ class UserAdmin(BaseUserAdmin):
                 )
             },
         ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+        (
+            _("Important dates"),
+            {
+                "fields": (
+                    "date_of_birth",
+                    "last_login",
+                    "date_joined",
+                    "last_visit",
+                )
+            },
+        ),
         (
             _("Followed content"),
             {
                 "fields": (
+                    "followed_users",
                     "followed_podcasts",
                     "followed_blogs",
                 )
