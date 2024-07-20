@@ -1,6 +1,10 @@
+from io import BytesIO
 import uuid
 
+
+import boto3
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import (
     AbstractBaseUser,
     BaseUserManager,
@@ -8,10 +12,63 @@ from django.contrib.auth.models import (
 )
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from PIL import Image
 
 
-def user_profile_picture_path(instance, filename):
-    return f"user_{instance.id}/{filename}"
+class ProfileImage(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    height = models.PositiveIntegerField()
+    width = models.PositiveIntegerField()
+    url = models.URLField()
+
+    @staticmethod
+    def generate_imageset(image_path, image_id):
+        s3_client = boto3.client(
+            "s3",
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            region_name=settings.AWS_S3_REGION_NAME,
+        )
+        sizes = [
+            {"height": 640, "width": 640},
+            {"height": 300, "width": 300},
+            {"height": 64, "width": 64},
+        ]
+        image_set = []
+        try:
+            original_image = Image.open(image_path)
+            for size in sizes:
+                resized_image = original_image.resize(
+                    (size["width"], size["height"]),
+                )
+                image_buffer = BytesIO()
+                resized_image.save(image_buffer, format=original_image.format)
+                image_buffer.seek(0)
+                image_key = (
+                    f"user_service/{image_id}_{size["width"]}x{size["height"]}.{original_image.format.lower()}"
+                )
+                s3_client.upload_fileobj(
+                    image_buffer, settings.AWS_STORAGE_BUCKET_NAME, image_key,
+                    ExtraArgs={
+                        "ContentType": Image.MIME[original_image.format]
+                    },
+                )
+
+                image_url = f"{settings.AWS_S3_URL}{image_key}"
+                image_set.append(
+                    {
+                        "height": size["height"],
+                        "width": size["width"],
+                        "url": image_url,
+                    }
+                )
+            return image_set
+        except Exception as e:
+            print(f"Error generating image set: {e}")
+            return None
+
+    def __str__(self):
+        return f"Profile image with id: {self.id}"
 
 
 class UserManager(BaseUserManager):
@@ -44,10 +101,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=255, blank=True, null=True)
     company_name = models.CharField(max_length=255, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
-    profile_picture = models.ImageField(
-        upload_to=user_profile_picture_path,
+    profile_images = models.ManyToManyField(
+        "users.ProfileImage",
         blank=True,
-        null=True,
+        related_name="user",
     )
     followed_users = models.ManyToManyField(
         "self",
