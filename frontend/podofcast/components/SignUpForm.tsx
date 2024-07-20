@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useRegister } from "@/api/reactQuery/authMutations";
+import Loader from "@/components/Loader";
+import OAuthSection from "@/components/OAuthSection";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -15,17 +19,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { motion } from "framer-motion";
-import Link from "next/link";
-import Image from "next/image";
-import SignUpBg from "/public/sign-up-bg.jpg";
-import { useRegister } from "@/api/reactQuery/authMutations";
-import { useRedirectIfAuthenticated } from "@/hooks/useRedirectIfAuthenticated";
+import { useRedirectIfAuthenticated } from "@/hooks/useRedirect";
 import useAuthStore from "@/store/useAuthStore";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 import "/app/styles/forms.css";
-import OAuthSection from "@/components/OAuthSection";
-import Loader from "@/components/Loader";
+import SignUpBg from "/public/sign-up-bg.jpg";
 
 const signUpSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -93,10 +93,7 @@ const SignUpForm = () => {
             Create account
           </h1>
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="form"
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)} className="form">
               <FormField
                 control={form.control}
                 name="email"

@@ -4,6 +4,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useLogin } from "@/api/reactQuery/authMutations";
+import Loader from "@/components/Loader";
+import OAuthSection from "@/components/OAuthSection";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,17 +17,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { motion } from "framer-motion";
-import "/app/styles/forms.css";
-import Link from "next/link";
-import Image from "next/image";
-import SignInBg from "/public/sign-in-bg.jpg";
-import { useLogin } from "@/api/reactQuery/authMutations";
-import { useRedirectIfAuthenticated } from "@/hooks/useRedirectIfAuthenticated";
+import { useRedirectIfAuthenticated } from "@/hooks/useRedirect";
 import useAuthStore from "@/store/useAuthStore";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
-import OAuthSection from "@/components/OAuthSection";
-import Loader from "@/components/Loader";
+import "/app/styles/forms.css";
+import SignInBg from "/public/sign-in-bg.jpg";
 
 const signInSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -74,10 +74,7 @@ const SignInForm = () => {
             account
           </h1>
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="form"
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)} className="form">
               <FormField
                 control={form.control}
                 name="email"

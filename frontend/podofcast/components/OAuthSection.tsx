@@ -13,7 +13,7 @@ const OAuthSection = () => {
         onClick={() => mutate({ provider: "google-oauth2" })}
         disabled={isPending}
       >
-        {isPending ? <Loader /> : "SIGN IN WITH GOOGLE"}
+        {isPending ? <Loader /> : "CONTINUE WITH GOOGLE"}
       </Button>
       <Button
         variant="outline"
@@ -21,7 +21,7 @@ const OAuthSection = () => {
         onClick={() => mutate({ provider: "spotify" })}
         disabled={isPending}
       >
-        {isPending ? <Loader /> : "SIGN IN WITH SPOTIFY"}
+        {isPending ? <Loader /> : "CONTINUE WITH SPOTIFY"}
       </Button>
     </div>
   );

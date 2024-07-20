@@ -28,7 +28,7 @@ export interface User {
   last_name?: string;
   company_name?: string;
   bio?: string;
-  profile_picture?: string;
+  profile_images?: ProfileImage[];
   is_company: boolean;
   is_creator: boolean;
   date_of_birth: string;
@@ -36,6 +36,13 @@ export interface User {
   last_visit: string;
   // followed_podcasts: string;
   // followed_blogs: string;
+}
+
+export interface ProfileImage {
+  id: string;
+  url: string;
+  width: number;
+  height: number;
 }
 
 export interface UserRegister {

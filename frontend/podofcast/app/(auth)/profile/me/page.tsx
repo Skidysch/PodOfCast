@@ -38,7 +38,7 @@ const page = () => {
             <Image
               width={120}
               height={120}
-              src={user?.profile_picture || avatarPlaceholder}
+              src={user?.profile_images?.[1]?.url || avatarPlaceholder}
               alt="Avatar image"
               className="object-cover object-center"
             />
