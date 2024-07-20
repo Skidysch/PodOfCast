@@ -5,5 +5,5 @@ app_name = "users"
 
 urlpatterns = [
     path("", UsersList.as_view(), name="user-list"),
-    path("<int:pk>/", UsersDetail.as_view(), name="user-detail"),
+    path("<uuid:pk>/", UsersDetail.as_view(), name="user-detail"),
 ]
