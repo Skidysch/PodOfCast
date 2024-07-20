@@ -10,10 +10,12 @@ import {
   StyledTiktokIcon,
   StyledTwitterIcon,
 } from "@/components/StyledSVG";
+import { useRedirectIfNotAuthenticated } from "@/hooks/useRedirect";
 import { SocialListProps } from "@/types";
 import { formatRelativeDateTime } from "@/lib/utils";
 
 const page = () => {
+  useRedirectIfNotAuthenticated();
   const { user } = useAuthStore();
   const SocialList: SocialListProps[] = [
     {
