@@ -35,10 +35,17 @@ const MobileNav = () => {
 						// Can't use UserMenuButton because of SheetClose
 						<div className='relative'>
 							<Button
-								className='button min-w-[220px]'
+								className='p-0 border border-black rounded-full overflow-hidden'
 								onClick={() => setIsDropdownVisible(!isDropdownVisible)}
 							>
-								{user?.first_name || user?.email}
+								<Avatar>
+									<AvatarImage
+										src={user?.profile_images?.[1]?.url}
+										width={40}
+										height={40}
+									/>
+									<AvatarFallback className="text-black text-2xl w-10 h-10">{user?.get_full_name[0]}</AvatarFallback>
+								</Avatar>
 							</Button>
 							<div
 								className={`overflow-hidden w-full absolute right-0 top-16 p-5 bg-secondary rounded-lg transition-all duration-300 ease-in-out ${

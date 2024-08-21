@@ -1,15 +1,14 @@
 'use client'
 
-import { useCurrentUser } from "@/api/reactQuery/authQueries"
-import Image from 'next/image'
-import avatarPlaceholder from '@/public/avatar-placeholder.png'
-import { Button } from '@/components/ui/button'
+import { useCurrentUser } from '@/api/reactQuery/authQueries'
 import Link from 'next/link'
 import {
 	StyledInstagramIcon,
 	StyledTiktokIcon,
 	StyledTwitterIcon,
 } from '@/components/StyledSVG'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+
 import { useRedirectIfNotAuthenticated } from '@/hooks/useRedirect'
 import { SocialListProps } from '@/types'
 import { formatRelativeDateTime } from '@/lib/utils'
@@ -37,13 +36,16 @@ const page = () => {
 			<div className='p-8 bg-profile-header-gradient col-span-full rounded-2xl flex justify-between items-end'>
 				<div className='flex flex-col'>
 					<div className='w-[120px] h-[120px] overflow-hidden rounded-full border-2 border-background flex items-center justify-center'>
-						<Image
-							width={120}
-							height={120}
-							src={user?.profile_images?.[1]?.url || avatarPlaceholder}
-							alt='Avatar image'
-							className='object-cover object-center'
-						/>
+						<Avatar>
+							<AvatarImage
+								src={user?.profile_images?.[1]?.url}
+								width={120}
+								height={120}
+							/>
+							<AvatarFallback className='text-5xl font-semibold'>
+								{user?.get_full_name[0]}
+							</AvatarFallback>
+						</Avatar>
 					</div>
 					<div className='mt-4 flex gap-5 items-center'>
 						<h3 className='font-bold text-4xl'>{user?.get_full_name}</h3>
