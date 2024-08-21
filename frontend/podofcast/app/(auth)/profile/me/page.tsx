@@ -1,10 +1,10 @@
 "use client";
 
-import useAuthStore from "@/store/useAuthStore";
-import Image from "next/image";
-import avatarPlaceholder from "@/public/avatar-placeholder.png";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useCurrentUser } from "@/api/reactQuery/authQueries"
+import Image from 'next/image'
+import avatarPlaceholder from '@/public/avatar-placeholder.png'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 import {
   StyledInstagramIcon,
   StyledTiktokIcon,
@@ -15,22 +15,22 @@ import { SocialListProps } from "@/types";
 import { formatRelativeDateTime } from "@/lib/utils";
 
 const page = () => {
-  useRedirectIfNotAuthenticated();
-  const { user } = useAuthStore();
-  const SocialList: SocialListProps[] = [
-    {
-      link: "https://twitter.com",
-      item: <StyledTwitterIcon />,
-    },
-    {
-      link: "https://instagram.com",
-      item: <StyledInstagramIcon />,
-    },
-    {
-      link: "https://tiktok.com",
-      item: <StyledTiktokIcon />,
-    },
-  ];
+	useRedirectIfNotAuthenticated()
+	const { data: user } = useCurrentUser()
+	const SocialList: SocialListProps[] = [
+		{
+			link: 'https://twitter.com',
+			item: <StyledTwitterIcon />,
+		},
+		{
+			link: 'https://instagram.com',
+			item: <StyledInstagramIcon />,
+		},
+		{
+			link: 'https://tiktok.com',
+			item: <StyledTiktokIcon />,
+		},
+	]
 
   return (
     <div className="container grid grid-cols-12 grid-rows-3 gap-5">

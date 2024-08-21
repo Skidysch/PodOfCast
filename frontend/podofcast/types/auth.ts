@@ -1,14 +1,12 @@
 export interface IAuthState {
   access: string | null;
   refresh: string | null;
-  user: User | null;
   isAuthenticated: boolean;
   confirmationEmail: string | null;
   errorMessage: string | null;
   provider: "google-oauth2" | "spotify" | null;
   setAccess: (access: string) => void;
   setRefresh: (refresh: string) => void;
-  setUser: (user: User) => void;
   setIsAuthenticated: (value: boolean) => void;
   setConfirmationEmail: (value: string) => void;
   setErrorMessage: (value: string) => void;
@@ -16,20 +14,21 @@ export interface IAuthState {
   clearUser: () => void;
   clearAccess: () => void;
   clearRefresh: () => void;
-  clearState: () => void;
+  clearErrorMessage: () => void;
   clearProvider: () => void;
   hydrate: () => void;
 }
 
 export interface User {
-  id: number;
+  id: string;
   email: string;
   first_name?: string;
   last_name?: string;
+  is_company: boolean;
   company_name?: string;
   bio?: string;
   profile_images?: ProfileImage[];
-  is_company: boolean;
+  is_onboarded?: boolean;
   is_creator: boolean;
   date_of_birth: string;
   date_joined: string;

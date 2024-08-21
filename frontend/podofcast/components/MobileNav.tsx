@@ -1,6 +1,7 @@
-import { useLogout } from "@/api/reactQuery/authMutations";
-import Burger from "@/components/Burger";
-import { Button } from "@/components/ui/button";
+import { useLogout } from '@/api/reactQuery/authMutations'
+import { useCurrentUser } from '@/api/reactQuery/authQueries'
+import Burger from '@/components/Burger'
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetClose,
@@ -13,9 +14,10 @@ import Link from "next/link";
 import { useState } from "react";
 
 const MobileNav = () => {
-  const { user, isAuthenticated } = useAuthStore();
-  const { mutate } = useLogout();
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+	const { isAuthenticated } = useAuthStore()
+	const { data: user } = useCurrentUser()
+	const { mutate } = useLogout()
+	const [isDropdownVisible, setIsDropdownVisible] = useState(false)
 
   const handleLogout = () => {
     setIsDropdownVisible(false);

@@ -1,11 +1,11 @@
 import { useLogout } from "@/api/reactQuery/authMutations";
-import useAuthStore from "@/store/useAuthStore";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "./ui/button";
+import { useCurrentUser } from '@/api/reactQuery/authQueries'
 
 const UserMenuButton = () => {
-  const { user } = useAuthStore();
+  const { data: user } = useCurrentUser();
   const { mutate } = useLogout();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
