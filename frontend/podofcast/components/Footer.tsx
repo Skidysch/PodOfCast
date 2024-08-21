@@ -48,6 +48,7 @@ const Footer = () => {
           <div className="flex gap-6">
             {SocialList.map((socialItem) => (
               <Link
+                key={socialItem.link}
                 className="w-6 h-6 flex justify-center items-center"
                 href={socialItem.link}
               >

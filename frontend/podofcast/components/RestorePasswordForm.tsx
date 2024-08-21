@@ -26,10 +26,10 @@ const RestorePasswordSchema = z.object({
 
 const RestorePasswordForm = () => {
   const { mutate, isPending } = useRestorePassword();
-  const { clearState, errorMessage } = useAuthStore();
+  const { clearErrorMessage, errorMessage } = useAuthStore();
 
   useEffect(() => {
-    clearState();
+    clearErrorMessage();
   }, []);
 
   const form = useForm<z.infer<typeof RestorePasswordSchema>>({

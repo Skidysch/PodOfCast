@@ -21,7 +21,7 @@ import { useEffect } from "react";
 import Loader from "@/components/Loader";
 
 const ResetPasswordSchema = z.object({
-  uid: z.string().max(3),
+  uid: z.string().max(100),
   token: z.string().max(100),
   new_password: z
     .string()
@@ -37,11 +37,11 @@ const ResetPasswordForm = ({
   params: { uid: string; token: string };
 }) => {
   const { mutate, isPending } = useResetPassword();
-  const { clearState, errorMessage } = useAuthStore();
+  const { clearErrorMessage, errorMessage } = useAuthStore();
   const { uid, token } = params;
 
   useEffect(() => {
-    clearState();
+    clearErrorMessage();
   }, []);
 
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({
@@ -55,7 +55,11 @@ const ResetPasswordForm = ({
   });
 
   async function onSubmit(values: z.infer<typeof ResetPasswordSchema>) {
-    await mutate(values);
+    try {
+      await mutate(values);
+    } catch (error) {
+      console.error("Reset password failed:", error);
+    }
   }
 
   return (
@@ -63,6 +67,7 @@ const ResetPasswordForm = ({
       <h1 className="max-w-[400px] md:max-w-full text-4xl md:text-6xl text-center font-bold leading-tight tracking-tight">
         Reset password
       </h1>
+      {/* FIXME: Form doesn't send */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="form">
           <FormField

@@ -9,7 +9,7 @@ class UpdateLastVisitMiddleware:
         response = self.get_response(request)
 
         # Update last_visit timestamp for authenticated users
-        if request.user.is_authenticated:
+        if request.user.is_authenticated and request.method == "GET":
             request.user.last_visit = timezone.now()
             request.user.save()
 

@@ -77,3 +77,4 @@ export const PlayMarketFooterList: PlatformProps[] = [
     src: GooglePlayIcon,
   },
 ]
+
