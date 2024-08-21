@@ -37,11 +37,11 @@ const ResetPasswordForm = ({
   params: { uid: string; token: string };
 }) => {
   const { mutate, isPending } = useResetPassword();
-  const { clearState, errorMessage } = useAuthStore();
+  const { clearErrorMessage, errorMessage } = useAuthStore();
   const { uid, token } = params;
 
   useEffect(() => {
-    clearState();
+    clearErrorMessage();
   }, []);
 
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({
@@ -63,6 +63,7 @@ const ResetPasswordForm = ({
       <h1 className="max-w-[400px] md:max-w-full text-4xl md:text-6xl text-center font-bold leading-tight tracking-tight">
         Reset password
       </h1>
+      {/* FIXME: Form doesn't send */}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="form">
           <FormField

@@ -41,10 +41,10 @@ const signUpSchema = z.object({
 const SignUpForm = () => {
   useRedirectIfAuthenticated();
   const { mutate, isPending } = useRegister();
-  const { errorMessage, clearState } = useAuthStore();
+  const { errorMessage, clearErrorMessage } = useAuthStore();
 
   useEffect(() => {
-    clearState();
+    clearErrorMessage();
   }, []);
 
   const form = useForm<z.infer<typeof signUpSchema>>({
@@ -59,7 +59,7 @@ const SignUpForm = () => {
 
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
     try {
-      await mutate(values);
+      mutate(values);
     } catch (error) {
       console.error("Sign up failed:", error);
     }

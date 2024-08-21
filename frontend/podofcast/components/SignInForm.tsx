@@ -36,10 +36,10 @@ const signInSchema = z.object({
 const SignInForm = () => {
   useRedirectIfAuthenticated();
   const { mutate, isPending } = useLogin();
-  const { errorMessage, clearState } = useAuthStore();
+  const { errorMessage, clearErrorMessage } = useAuthStore();
 
   useEffect(() => {
-    clearState();
+    clearErrorMessage();
   }, []);
 
   const form = useForm<z.infer<typeof signInSchema>>({

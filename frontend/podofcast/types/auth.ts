@@ -26,6 +26,7 @@ export interface User {
   last_name?: string;
   is_company: boolean;
   company_name?: string;
+  get_full_name: string;
   bio?: string;
   profile_images?: ProfileImage[];
   is_onboarded?: boolean;
