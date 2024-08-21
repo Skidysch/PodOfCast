@@ -88,7 +88,7 @@ class CustomUserSerializer(UserSerializer):
                     user_id=instance.id,
                 )
             except Exception as e:
-                raise serializers.ValidationError({"profile_image": str(e)})
+                raise serializers.ValidationError({"profile_image error": str(e)})
 
         instance.save()
         return instance
@@ -132,10 +132,10 @@ class OnboardingSerializer(serializers.ModelSerializer):
                     profile_image,
                     user_id=instance.id,
                 )
-                instance.is_onboarded = True
             except Exception as e:
                 raise serializers.ValidationError({"profile_image error": str(e)})
 
+        instance.is_onboarded = True
         instance.save()
 
         return instance

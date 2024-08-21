@@ -1,14 +1,14 @@
-import { useLogout } from "@/api/reactQuery/authMutations";
-import Link from "next/link";
-import { useState } from "react";
-import { Button } from "./ui/button";
+import { useLogout } from '@/api/reactQuery/authMutations'
+import Link from 'next/link'
+import { useState } from 'react'
+import { Button } from './ui/button'
 import { useCurrentUser } from '@/api/reactQuery/authQueries'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const UserMenuButton = () => {
-  const { data: user } = useCurrentUser();
-  const { mutate } = useLogout();
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+	const { data: user } = useCurrentUser()
+	const { mutate } = useLogout()
+	const [isDropdownVisible, setIsDropdownVisible] = useState(false)
 
 	return (
 		<div className='relative'>
@@ -72,4 +72,4 @@ const UserMenuButton = () => {
 	)
 }
 
-export default UserMenuButton;
+export default UserMenuButton

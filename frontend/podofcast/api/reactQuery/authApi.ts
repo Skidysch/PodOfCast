@@ -129,7 +129,9 @@ export const oAuthLogin = async (data: OAuthLogin) => {
 	return responseData
 }
 
-export const oAuthAuthenticate = async (data: OAuthAuthenticate) => {
+export const oAuthAuthenticate = async (
+	data: OAuthAuthenticate
+): Promise<User> => {
 	const access = useAuthStore.getState().access
 	const setAccess = useAuthStore.getState().setAccess
 	const setRefresh = useAuthStore.getState().setRefresh
@@ -173,7 +175,7 @@ export const oAuthAuthenticate = async (data: OAuthAuthenticate) => {
 	}
 }
 
-export const logout = (): Promise<void> => {
+export const logout = async (): Promise<void> => {
 	const clearAccess = useAuthStore.getState().clearAccess
 	const clearRefresh = useAuthStore.getState().clearRefresh
 	const setIsAuthenticated = useAuthStore.getState().setIsAuthenticated
@@ -199,7 +201,6 @@ export const restorePassword = async (
 
 export const resetPassword = async (data: UserResetPassword): Promise<void> => {
 	try {
-		console.log(data)
 		await axiosInstance.post('/auth/users/reset_password_confirm/', data)
 	} catch (error) {
 		throw error

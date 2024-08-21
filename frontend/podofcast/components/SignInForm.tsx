@@ -17,7 +17,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useRedirectIfAuthenticated } from "@/hooks/useRedirect";
 import useAuthStore from "@/store/useAuthStore";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -34,7 +33,6 @@ const signInSchema = z.object({
 });
 
 const SignInForm = () => {
-  useRedirectIfAuthenticated();
   const { mutate, isPending } = useLogin();
   const { errorMessage, clearErrorMessage } = useAuthStore();
 

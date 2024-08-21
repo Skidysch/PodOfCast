@@ -12,6 +12,7 @@ import { HeaderLinks } from '@/constants'
 import useAuthStore from '@/store/useAuthStore'
 import Link from 'next/link'
 import { useState } from 'react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 const MobileNav = () => {
 	const { isAuthenticated } = useAuthStore()
@@ -48,7 +49,7 @@ const MobileNav = () => {
 								</Avatar>
 							</Button>
 							<div
-								className={`overflow-hidden w-full absolute right-0 top-16 p-5 bg-secondary rounded-lg transition-all duration-300 ease-in-out ${
+								className={`overflow-hidden w-fit absolute right-1/2 translate-x-1/2 top-16 p-5 bg-secondary rounded-lg transition-all duration-300 ease-in-out ${
 									isDropdownVisible
 										? 'opacity-100 translate-y-0'
 										: 'opacity-0 translate-y-full pointer-events-none'
@@ -120,9 +121,8 @@ const MobileNav = () => {
 				</div>
 				<ul className='flex flex-col gap-10 items-center leading-[1.6] font-bold'>
 					{HeaderLinks.map(item => (
-						<SheetClose asChild>
+						<SheetClose key={item.name} asChild>
 							<Link
-								key={item.name}
 								href={item.link}
 								className='hover:text-primary transition-colors duration-300 ease-in-out'
 							>

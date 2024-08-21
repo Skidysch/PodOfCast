@@ -312,7 +312,7 @@ export const useResetPassword = () => {
 					JSON.parse(error?.request.response)
 				)[0] as string
 				setErrorMessage(errorMessage)
-			} else {
+			}
 		},
 	})
 }

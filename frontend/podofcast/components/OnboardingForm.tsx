@@ -23,13 +23,9 @@ import { useOnboarding } from '@/api/reactQuery/authMutations'
 import { useCurrentUser } from '@/api/reactQuery/authQueries'
 import useAuthStore from '@/store/useAuthStore'
 
+import '@/app/styles/forms.css'
 import { AnimatePresence, motion } from 'framer-motion'
-import '/app/styles/forms.css'
 import { UUID } from 'crypto'
-
-// Image validation constants
-const MAX_FILE_SIZE: number = 5 * 1024 * 1024
-const ALLOWED_MIME_TYPES: string[] = ['image/jpeg', 'image/png']
 
 const OnboardingSchema = z.object({
 	first_name: z

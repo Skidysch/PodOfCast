@@ -21,7 +21,7 @@ import { useEffect } from "react";
 import Loader from "@/components/Loader";
 
 const ResetPasswordSchema = z.object({
-  uid: z.string().max(3),
+  uid: z.string().max(100),
   token: z.string().max(100),
   new_password: z
     .string()
@@ -55,7 +55,11 @@ const ResetPasswordForm = ({
   });
 
   async function onSubmit(values: z.infer<typeof ResetPasswordSchema>) {
-    await mutate(values);
+    try {
+      await mutate(values);
+    } catch (error) {
+      console.error("Reset password failed:", error);
+    }
   }
 
   return (
