@@ -31,7 +31,6 @@ class CustomUserSerializer(UserSerializer):
     )
 
     class Meta(UserSerializer.Meta):
-        model = User
         fields = (
             "id",
             "email",
@@ -42,6 +41,7 @@ class CustomUserSerializer(UserSerializer):
             "profile_image",
             "profile_images",
             "date_of_birth",
+            "is_onboarded",
             "is_company",
             "is_creator",
             "followed_users",
@@ -49,6 +49,7 @@ class CustomUserSerializer(UserSerializer):
             "followed_blogs",
             "date_joined",
             "last_visit",
+            "get_full_name",
         )
         read_only_fields = (
             "email",
@@ -57,52 +58,36 @@ class CustomUserSerializer(UserSerializer):
             "followed_users",
             "followed_podcasts",
             "followed_blogs",
+            "get_full_name",
+            "is_onboarded",
+            "is_creator",
         )
 
     def create(self, validated_data):
         profile_image = validated_data.pop("profile_image", None)
         user = super().create(**validated_data)
-        user_id = user.id
 
         if profile_image:
             try:
-                image_set = ProfileImage.generate_imageset(
+                ProfileImage.generate_imageset(
                     profile_image,
-                    image_id=user_id,
+                    user_id=user.id,
                 )
-                profile_images = []
-                for image in image_set:
-                    instance = ProfileImage.objects.create(**image)
-                    profile_images.append(instance)
             except Exception as e:
                 raise serializers.ValidationError({"profile_image": str(e)})
-
-        user.profile_images.set(profile_images)
         return user
 
     def update(self, instance, validated_data):
         profile_image = validated_data.pop("profile_image", None)
-        # Convert string representation of id field to UUID
         for attr, value in validated_data.items():
-            if (
-                isinstance(value, str)
-                and hasattr(instance, attr)
-                and isinstance(getattr(instance, attr), uuid.UUID)
-            ):
-                value = uuid.UUID(value)  # Convert string to UUID if necessary
             setattr(instance, attr, value)
 
         if profile_image:
             try:
-                image_set = ProfileImage.generate_imageset(
+                ProfileImage.generate_imageset(
                     profile_image,
-                    image_id=instance.id,
+                    user_id=instance.id,
                 )
-                profile_images = []
-                for image in image_set:
-                    image_obj = ProfileImage.objects.create(**image)
-                    profile_images.append(image_obj)
-                instance.profile_images.set(profile_images)
             except Exception as e:
                 raise serializers.ValidationError({"profile_image": str(e)})
 

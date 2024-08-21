@@ -2,10 +2,11 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from users.models import User
+from users.models import ProfileImage, User
 
 
 class UserAdmin(BaseUserAdmin):
+    save_on_top = True
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         (
@@ -16,7 +17,6 @@ class UserAdmin(BaseUserAdmin):
                     "last_name",
                     "company_name",
                     "bio",
-                    "profile_picture",
                     "is_company",
                     "is_creator",
                 )
@@ -27,6 +27,7 @@ class UserAdmin(BaseUserAdmin):
             {
                 "fields": (
                     "is_active",
+                    "is_onboarded",
                     "is_staff",
                     "is_superuser",
                     "groups",
@@ -71,12 +72,10 @@ class UserAdmin(BaseUserAdmin):
         ),
     )
     list_display = (
-        "id",
         "email",
         "get_full_name",
         "is_company",
         "is_creator",
-        "is_staff",
     )
     search_fields = (
         "email",
@@ -88,3 +87,4 @@ class UserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, UserAdmin)
+admin.site.register(ProfileImage)

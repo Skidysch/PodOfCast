@@ -1,7 +1,6 @@
 from io import BytesIO
 import uuid
 
-
 import boto3
 from django.db import models
 from django.conf import settings
@@ -20,9 +19,10 @@ class ProfileImage(models.Model):
     height = models.PositiveIntegerField()
     width = models.PositiveIntegerField()
     url = models.URLField()
+    user = models.ForeignKey("User", related_name="profile_images", on_delete=models.CASCADE, blank=True,)
 
     @staticmethod
-    def generate_imageset(image_path, image_id):
+    def generate_imageset(image_path, user_id):
         s3_client = boto3.client(
             "s3",
             aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
@@ -35,6 +35,7 @@ class ProfileImage(models.Model):
             {"height": 64, "width": 64},
         ]
         image_set = []
+        user = User.objects.get(pk=user_id)
         try:
             original_image = Image.open(image_path)
             for size in sizes:
@@ -45,7 +46,7 @@ class ProfileImage(models.Model):
                 resized_image.save(image_buffer, format=original_image.format)
                 image_buffer.seek(0)
                 image_key = (
-                    f"user_service/{image_id}_{size["width"]}x{size["height"]}.{original_image.format.lower()}"
+                    f"user_service/{user_id}_{size["width"]}x{size["height"]}.{original_image.format.lower()}"
                 )
                 s3_client.upload_fileobj(
                     image_buffer, settings.AWS_STORAGE_BUCKET_NAME, image_key,
@@ -62,7 +63,8 @@ class ProfileImage(models.Model):
                         "url": image_url,
                     }
                 )
-            return image_set
+            for image in image_set:
+                ProfileImage.objects.get_or_create(url=image['url'], defaults={"height": image["height"], "width": image["width"], "user": user})
         except Exception as e:
             print(f"Error generating image set: {e}")
             return None
@@ -101,11 +103,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=255, blank=True, null=True)
     company_name = models.CharField(max_length=255, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
-    profile_images = models.ManyToManyField(
-        "users.ProfileImage",
-        blank=True,
-        related_name="user",
-    )
+    is_onboarded = models.BooleanField(default=False)
     followed_users = models.ManyToManyField(
         "self",
         related_name="followers",
@@ -125,7 +123,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
-    date_of_birth = models.DateTimeField(
+    date_of_birth = models.DateField(
         blank=True,
         null=True,
     )
