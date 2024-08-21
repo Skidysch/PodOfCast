@@ -3,28 +3,31 @@
 import { useRouter } from 'next/navigation'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import {
-  User,
-  UserActivation,
-  UserLogin,
-  OAuthLogin,
-  OAuthAuthenticate,
-  UserRegister,
-  UserResetPassword,
-  UserRestorePassword,
-  OAuthLoginResponse,
-} from "@/types/auth";
+	User,
+	UserActivation,
+	UserOnboarding,
+	UserLogin,
+	OAuthLogin,
+	OAuthAuthenticate,
+	UserRegister,
+	UserResetPassword,
+	UserRestorePassword,
+	OAuthLoginResponse,
+} from '@/types/auth'
 import {
-  activation,
-  login,
-  oAuthLogin,
-  logout,
-  register,
-  resetPassword,
-  restorePassword,
-  oAuthAuthenticate,
-} from "@/api/reactQuery/authApi";
-import useAuthStore from "@/store/useAuthStore";
-import { AxiosError } from "axios";
+	activation,
+	onboarding,
+	login,
+	oAuthLogin,
+	logout,
+	register,
+	resetPassword,
+	restorePassword,
+	oAuthAuthenticate,
+} from '@/api/reactQuery/authApi'
+import useAuthStore from '@/store/useAuthStore'
+import { AxiosError } from 'axios'
+import { UUID } from 'crypto'
 
 export const useRegister = () => {
 	const router = useRouter()
@@ -151,17 +154,53 @@ export const useLogout = () => {
 export const useActivation = () => {
 	const router = useRouter()
 
-  return useMutation({
-    mutationFn: (data: UserActivation) => activation(data),
-    onMutate: () => {
-      console.log("activation mutate");
-    },
-    onSuccess: () => {
-      console.log("activation success");
-      router.push("/activation/done");
-    },
-  });
-};
+	return useMutation({
+		mutationFn: (data: UserActivation) => activation(data),
+		onMutate: () => {
+			console.log('activation mutate')
+		},
+		onSuccess: () => {
+			console.log('activation success')
+			router.push('/activation/done')
+		},
+	})
+}
+
+export const useOnboarding = () => {
+	const router = useRouter()
+	const queryClient = useQueryClient()
+	const { setErrorMessage } = useAuthStore()
+
+	return useMutation({
+		mutationFn: ({
+			data,
+			userId,
+		}: {
+			data: UserOnboarding
+			userId: UUID
+		}) => onboarding({ data, userId }),
+		onMutate: () => {
+			console.log('onboarding mutate')
+		},
+		onSuccess: async (user: User) => {
+			console.log('onboarding success')
+		},
+		onError: () => {
+			console.log('onboarding error')
+		},
+		onSettled: async (_, error: AxiosError | null) => {
+			console.log('onboarding settle')
+			if (error) {
+				const errorMessage = Object.values(
+					JSON.parse(error?.request.response)
+				)[0] as string
+				setErrorMessage(errorMessage)
+			} else {
+				router.push('/profile/me')
+			}
+		},
+	})
+}
 
 export const useRestorePassword = () => {
 	const router = useRouter()

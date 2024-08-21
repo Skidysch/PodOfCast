@@ -57,6 +57,16 @@ export interface UserActivation {
   token: string;
 }
 
+export interface UserOnboarding {
+  first_name?: string;
+  last_name?: string;
+  is_company?: boolean;
+  company_name?: string;
+  profile_image?: File | null;
+  bio?: string;
+  date_of_birth?: string;
+}
+
 export interface UserLogin {
   email: string;
   password: string;

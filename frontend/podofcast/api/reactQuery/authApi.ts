@@ -1,19 +1,21 @@
 import axiosInstance from '@/api/api'
 import useAuthStore from '@/store/useAuthStore'
 import {
-  AuthResponse,
-  User,
-  UserLogin,
-  UserRegister,
-  UserActivation,
-  UserRestorePassword,
-  UserResetPassword,
-  OAuthLogin,
-  OAuthLoginResponse,
-  OAuthAuthenticate,
-  OAuthParams,
-} from "@/types/auth";
-import { AxiosError } from "axios";
+	AuthResponse,
+	User,
+	UserLogin,
+	UserRegister,
+	UserActivation,
+	UserOnboarding,
+	UserRestorePassword,
+	UserResetPassword,
+	OAuthLogin,
+	OAuthLoginResponse,
+	OAuthAuthenticate,
+	OAuthParams,
+} from '@/types/auth'
+import { AxiosError } from 'axios'
+import { UUID } from 'crypto'
 
 export const register = async (data: UserRegister): Promise<User> => {
 	const response = await axiosInstance.post<User>('/auth/users/', data)
@@ -25,12 +27,35 @@ export const register = async (data: UserRegister): Promise<User> => {
 }
 
 export const activation = async (data: UserActivation): Promise<void> => {
-  try {
-    await axiosInstance.post("/auth/users/activation/", data);
-  } catch (error) {
-    console.log(error);
-  }
-};
+	try {
+		await axiosInstance.post('/auth/users/activation/', data)
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const onboarding = async ({
+	data,
+	userId,
+}: {
+	data: UserOnboarding
+	userId: UUID
+}): Promise<User> => {
+	try {
+		const response = await axiosInstance.patch<User>(
+			`/api/users/onboarding/${userId}/`,
+			data,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			}
+		)
+		return response.data
+	} catch (error) {
+		console.log(error)
+	}
+}
 
 export const login = async (data: UserLogin): Promise<User> => {
 	const setAccess = useAuthStore.getState().setAccess

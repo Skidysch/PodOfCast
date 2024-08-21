@@ -21,6 +21,7 @@ class ProfileImageSerializer(serializers.ModelSerializer):
         )
 
 
+# TODO: split serializers by methods
 class CustomUserSerializer(UserSerializer):
     profile_image = serializers.ImageField(write_only=True, required=False)
     profile_images = ProfileImageSerializer(
@@ -100,3 +101,41 @@ class CustomUserCreatePasswordRetypeSerializer(UserCreatePasswordRetypeSerialize
         extra_kwargs = {
             "password": {"write_only": True},
         }
+
+
+class OnboardingSerializer(serializers.ModelSerializer):
+    profile_image = serializers.ImageField(write_only=True, required=False)
+
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "is_company",
+            "company_name",
+            "bio",
+            "profile_image",
+            "date_of_birth",
+        ]
+
+    def update(self, instance, validated_data):
+        profile_image = validated_data.pop("profile_image", None)
+        try:
+            for attr, value in validated_data.items():
+                setattr(instance, attr, value)
+        except Exception as e:
+            raise serializers.ValidationError({"Update error": str(e)})
+
+        if profile_image:
+            try:
+                ProfileImage.generate_imageset(
+                    profile_image,
+                    user_id=instance.id,
+                )
+                instance.is_onboarded = True
+            except Exception as e:
+                raise serializers.ValidationError({"profile_image error": str(e)})
+
+        instance.save()
+
+        return instance
