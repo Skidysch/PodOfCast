@@ -6,6 +6,7 @@ import {
 	UserLogin,
 	UserRegister,
 	UserActivation,
+	EditProfileData,
 	UserOnboarding,
 	UserRestorePassword,
 	UserResetPassword,
@@ -29,6 +30,41 @@ export const register = async (data: UserRegister): Promise<User> => {
 export const activation = async (data: UserActivation): Promise<void> => {
 	try {
 		await axiosInstance.post('/auth/users/activation/', data)
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const editProfile = async ({
+	data,
+	userId,
+}: {
+	data: EditProfileData
+	userId: UUID
+}): Promise<User> => {
+	try {
+		const response = await axiosInstance.patch<User>(
+			`/api/users/${userId}/`,
+			data,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data',
+				},
+			}
+		)
+		return response.data
+	} catch (error) {
+		console.log(error)
+	}
+}
+
+export const deleteProfile = async (userId: UUID) => {
+	try {
+		const response = await axiosInstance.delete(`/api/users/${userId}/`)
+		if (response.status !== 204) {
+			throw new AxiosError('User deletion failed')
+		}
+		return response.data
 	} catch (error) {
 		console.log(error)
 	}

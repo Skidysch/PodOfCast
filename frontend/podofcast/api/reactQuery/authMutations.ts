@@ -13,6 +13,7 @@ import {
 	UserResetPassword,
 	UserRestorePassword,
 	OAuthLoginResponse,
+	EditProfileData,
 } from '@/types/auth'
 import {
 	activation,
@@ -24,6 +25,8 @@ import {
 	resetPassword,
 	restorePassword,
 	oAuthAuthenticate,
+	editProfile,
+	deleteProfile,
 } from '@/api/reactQuery/authApi'
 import useAuthStore from '@/store/useAuthStore'
 import { AxiosError } from 'axios'
@@ -74,7 +77,6 @@ export const useLogin = () => {
 		},
 		onSuccess: async (user: User) => {
 			console.log('login success')
-			setIsAuthenticated(true)
 
 			if (!user.is_onboarded) {
 				router.push('/onboarding')
@@ -93,6 +95,70 @@ export const useLogin = () => {
 				)[0] as string
 				setErrorMessage(errorMessage)
 			} else {
+				setIsAuthenticated(true)
+			}
+		},
+	})
+}
+
+export const useEditProfile = () => {
+	const router = useRouter()
+	const { setErrorMessage } = useAuthStore()
+	const queryClient = useQueryClient()
+
+	return useMutation({
+		mutationFn: ({ data, userId }: { data: EditProfileData; userId: UUID }) =>
+			editProfile({ data, userId }),
+		onMutate: () => {
+			console.log('edit profile mutate')
+		},
+		onSuccess: async (user: User) => {
+			queryClient.invalidateQueries({ queryKey: ['current-user'] })
+			console.log('edit profile success')
+		},
+		onError: () => {
+			console.log('edit profile error')
+		},
+		onSettled: async (_, error: AxiosError | null) => {
+			console.log('edit profile settle')
+			if (error) {
+				const errorMessage = Object.values(
+					JSON.parse(error?.request.response)
+				)[0] as string
+				setErrorMessage(errorMessage)
+			} else {
+				router.push('/profile/me')
+			}
+		},
+	})
+}
+
+export const useDeleteProfile = () => {
+	const router = useRouter()
+	const { setErrorMessage } = useAuthStore()
+	const queryClient = useQueryClient()
+
+	return useMutation({
+		mutationFn: (userId: UUID) => deleteProfile(userId),
+		onMutate: () => {
+			console.log('delete profile mutate')
+		},
+		onSuccess: async () => {
+			console.log('delete profile success')
+		},
+		onError: () => {
+			console.log('delete profile error')
+		},
+		onSettled: async (_, error: AxiosError | null) => {
+			console.log('delete profile settle')
+			if (error) {
+				const errorMessage = Object.values(
+					JSON.parse(error?.request.response)
+				)[0] as string
+				setErrorMessage(errorMessage)
+			} else {
+				queryClient.invalidateQueries({ queryKey: ['current-user'] })
+				await logout()
 			}
 		},
 	})

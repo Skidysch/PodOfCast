@@ -10,8 +10,10 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 import { useRedirectIfNotAuthenticated } from '@/hooks/useRedirect'
+import EditProfileForm from '@/components/EditProfileForm'
 import { SocialListProps } from '@/types'
 import { formatRelativeDateTime } from '@/lib/utils'
+import DeleteProfileForm from '@/components/DeleteProfileForm'
 
 const page = () => {
 	useRedirectIfNotAuthenticated()
@@ -47,9 +49,10 @@ const page = () => {
 							</AvatarFallback>
 						</Avatar>
 					</div>
-					<div className='mt-4 flex gap-5 items-center'>
-						<h3 className='font-bold text-4xl'>{user?.get_full_name}</h3>
-						<Button className='button button--small'>CHANGE</Button>
+					<div className='mt-4 flex items-center'>
+						<h3 className='font-bold text-3xl lg:text-4xl'>
+							{user?.get_full_name}
+						</h3>
 					</div>
 					<ul className='flex gap-4 mt-1'>
 						{SocialList.map(socialItem => (
@@ -85,7 +88,6 @@ const page = () => {
 			<div className='p-5 col-span-4 bg-white bg-opacity-50 backdrop-blur-sm rounded-2xl flex flex-col gap-3'>
 				<div className='flex justify-between'>
 					<h4 className='font-bold text-2xl'>Bio</h4>
-					<Button className='button button--small'>CHANGE</Button>
 				</div>
 				<p className='font-medium text-sm text-destruction'>
 					{user?.bio || 'Write some info about you there'}
