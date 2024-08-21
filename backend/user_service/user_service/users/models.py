@@ -45,26 +45,28 @@ class ProfileImage(models.Model):
                 image_buffer = BytesIO()
                 resized_image.save(image_buffer, format=original_image.format)
                 image_buffer.seek(0)
-                image_key = (
-                    f"user_service/{user_id}_{size["width"]}x{size["height"]}.{original_image.format.lower()}"
+                image_base = (
+                    f"user_service/{user_id}_{size["width"]}x{size["height"]}"
                 )
+                image_key = f'{image_base}.{original_image.format.lower()}'
                 s3_client.upload_fileobj(
                     image_buffer, settings.AWS_STORAGE_BUCKET_NAME, image_key,
                     ExtraArgs={
                         "ContentType": Image.MIME[original_image.format]
                     },
                 )
-
                 image_url = f"{settings.AWS_S3_URL}{image_key}"
+                
                 image_set.append(
                     {
                         "height": size["height"],
                         "width": size["width"],
                         "url": image_url,
+                        "base": image_base,
                     }
                 )
             for image in image_set:
-                ProfileImage.objects.get_or_create(url=image['url'], defaults={"height": image["height"], "width": image["width"], "user": user})
+                ProfileImage.objects.update_or_create(url__contains=image["base"], defaults={"url": image["url"]}, create_defaults={"url": image["url"], "height": image["height"], "width": image["width"], "user": user,})
         except Exception as e:
             print(f"Error generating image set: {e}")
             return None
