@@ -163,6 +163,13 @@ export const oAuthAuthenticate = async (data: OAuthAuthenticate) => {
 		} catch (error) {
 			throw error
 		}
+
+		try {
+			const userResponse = await axiosInstance.get<User>('/auth/users/me/')
+			return userResponse.data
+		} catch (error) {
+			throw error
+		}
 	}
 }
 

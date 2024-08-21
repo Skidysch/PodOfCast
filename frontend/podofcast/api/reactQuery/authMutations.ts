@@ -181,14 +181,19 @@ export const useOAuthLogin = () => {
 }
 
 export const useOAuthAuthenticate = () => {
-	const queryClient = useQueryClient()
+	const router = useRouter()
 	const { setIsAuthenticated, clearProvider } = useAuthStore()
 
 	return useMutation({
 		mutationFn: (data: OAuthAuthenticate) => oAuthAuthenticate(data),
-		onSuccess: () => {
+		onSuccess: (user: User) => {
 			console.log('oauth authenticate success')
 			setIsAuthenticated(true)
+			if (!user.is_onboarded) {
+				router.push('/onboarding')
+			} else {
+				router.push('/profile/me')
+			}
 		},
 		onError: () => {
 			console.log('oauth authenticate error')
@@ -198,7 +203,6 @@ export const useOAuthAuthenticate = () => {
 			if (error) {
 				console.log(error)
 			} else {
-				// await queryClient.invalidateQueries({ queryKey: ['current-user'] })
 				clearProvider()
 			}
 		},
@@ -234,17 +238,11 @@ export const useActivation = () => {
 
 export const useOnboarding = () => {
 	const router = useRouter()
-	const queryClient = useQueryClient()
 	const { setErrorMessage } = useAuthStore()
 
 	return useMutation({
-		mutationFn: ({
-			data,
-			userId,
-		}: {
-			data: UserOnboarding
-			userId: UUID
-		}) => onboarding({ data, userId }),
+		mutationFn: ({ data, userId }: { data: UserOnboarding; userId: UUID }) =>
+			onboarding({ data, userId }),
 		onMutate: () => {
 			console.log('onboarding mutate')
 		},
@@ -270,7 +268,6 @@ export const useOnboarding = () => {
 
 export const useRestorePassword = () => {
 	const router = useRouter()
-	const queryClient = useQueryClient()
 	const { setErrorMessage, setConfirmationEmail } = useAuthStore()
 
 	return useMutation({
@@ -290,8 +287,6 @@ export const useRestorePassword = () => {
 					JSON.parse(error?.request.response)
 				)[0] as string
 				setErrorMessage(errorMessage)
-			} else {
-				// queryClient.invalidateQueries({ queryKey: ['current-user'] })
 			}
 		},
 	})
@@ -299,7 +294,6 @@ export const useRestorePassword = () => {
 
 export const useResetPassword = () => {
 	const router = useRouter()
-	const queryClient = useQueryClient()
 	const { setErrorMessage } = useAuthStore()
 
 	return useMutation({
@@ -319,8 +313,6 @@ export const useResetPassword = () => {
 				)[0] as string
 				setErrorMessage(errorMessage)
 			} else {
-				// queryClient.invalidateQueries({ queryKey: ['current-user'] })
-			}
 		},
 	})
 }
